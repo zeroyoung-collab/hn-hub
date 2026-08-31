@@ -4,76 +4,83 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>조영신 업무 허브</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
   --navy:#0B3E86; --navy2:#092f66; --gold:#F5B301; --gold-d:#c8920a;
-  --green:#1A9A3E; --ink:#141a24; --soft:#3d4652; --line:#b9c4d4; --lt:#eef3fa;
+  --green:#1A9A3E; --ink:#141a24; --soft:#3d4652;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Noto Sans KR',sans-serif;background:#f4f7fb;color:var(--ink);word-break:keep-all;min-height:100vh;display:flex;flex-direction:column}
-header{background:linear-gradient(150deg,#0B3E86,#0d4b9e,#092f66);color:#fff;padding:22px 20px 18px;position:relative}
-header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--green))}
-.hwrap{max-width:920px;margin:0 auto}
-header .en{color:var(--gold);font-size:10.5px;font-weight:700;letter-spacing:.16em}
-header h1{font-size:21px;font-weight:900;letter-spacing:-.02em;margin-top:2px}
-main{max-width:920px;margin:0 auto;padding:22px 16px 40px;width:100%;flex:1;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
-@media(max-width:700px){main{grid-template-columns:1fr}}
-.col h2{font-size:16px;font-weight:900;color:var(--navy);padding-left:12px;position:relative;margin-bottom:10px}
-.col h2::before{content:"";position:absolute;left:0;top:3px;width:6px;height:17px;border-radius:3px}
-.col.sci h2::before{background:var(--green)}
-.col.g3 h2::before{background:var(--gold)}
-a.item{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--line);border-radius:11px;padding:11px 13px;margin-bottom:8px;text-decoration:none;color:inherit;transition:border-color .12s}
-a.item:hover{border-color:var(--navy)}
-.em{font-size:17px;width:24px;text-align:center;flex-shrink:0}
-a.item > span:nth-of-type(2){flex:1;min-width:0}
-.tt{display:block;font-weight:700;font-size:14.5px}
-.dd{display:block;font-size:12px;color:var(--soft);margin-top:1px}
-.tag{margin-left:auto;flex-shrink:0;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--lt);color:var(--navy);border:1px solid #cbd9ee;white-space:nowrap}
-.tag.share{background:#fdf3d5;color:var(--gold-d);border-color:#eed48a}
-footer{text-align:center;font-size:12px;color:#8a94a3;padding:18px 0 28px}
-footer b{color:var(--navy)}
+body{font-family:'Noto Sans KR',sans-serif;background:#f3efe6;color:var(--ink);word-break:keep-all;min-height:100vh;display:flex;flex-direction:column}
+.wrap{max-width:920px;margin:0 auto;width:100%;padding:34px 20px 10px;flex:1}
+.head{background:var(--navy);color:#fff;border:3px solid var(--navy2);box-shadow:8px 8px 0 var(--gold);padding:22px 26px;margin-bottom:36px}
+.head .en{font-size:11px;font-weight:800;letter-spacing:.24em;color:var(--gold)}
+.head h1{font-size:29px;font-weight:900;letter-spacing:-.02em;margin-top:3px}
+.head h1 small{font-size:14px;font-weight:800;color:var(--gold);margin-left:10px;letter-spacing:0}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:0 30px;align-items:start}
+.sec{display:inline-block;background:var(--gold);color:var(--navy2);font-size:13px;font-weight:900;padding:5px 14px;border:2.5px solid var(--navy2);margin:6px 0 14px;letter-spacing:.08em}
+.sec.g{background:var(--green);color:#fff}
+a.item{display:flex;align-items:center;gap:10px;background:#fff;border:2.5px solid var(--navy2);padding:12px 15px;margin-bottom:11px;font-size:15px;box-shadow:4px 4px 0 rgba(9,47,102,.9);text-decoration:none;color:inherit;transition:transform .1s,box-shadow .1s}
+a.item:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--gold-d)}
+a.item:active{transform:translate(1px,1px);box-shadow:2px 2px 0 rgba(9,47,102,.9)}
+.t{font-weight:800;min-width:0}
+.t small{display:block;font-size:11.5px;color:var(--soft);font-weight:500;margin-top:1px}
+.tg{margin-left:auto;flex-shrink:0;font-size:10.5px;font-weight:900;color:var(--navy2);border:2px solid var(--navy2);padding:2px 7px;white-space:nowrap;letter-spacing:.02em}
+.tg.s{color:var(--gold-d);border-color:var(--gold-d)}
+.arw{flex-shrink:0;font-weight:900;color:var(--gold-d);font-size:17px}
+.tg + .arw{margin-left:0}
+.t + .arw{margin-left:auto}
+footer{text-align:center;font-size:12.5px;font-weight:800;color:var(--navy);padding:24px 0 30px}
+@media(max-width:700px){
+  .wrap{padding:24px 14px 10px}
+  .cols{grid-template-columns:1fr}
+  .head{box-shadow:6px 6px 0 var(--gold);padding:18px 20px}
+  .head h1{font-size:24px}
+  .sec:not(:first-child){margin-top:18px}
+}
 </style>
 </head>
 <body>
-<header><div class="hwrap">
-  <div class="en">HONAM HIGH SCHOOL · MY WORKSPACE · 2026</div>
-  <h1>업무 허브 <span style="font-size:14px;font-weight:700;color:var(--gold)">2026학년도</span></h1>
-</div></header>
-<main>
-  <div class="col g3">
-    <h2>3학년 · 대입</h2>
-    <a class="item" href="https://zeroyoung-collab.github.io/hn3/"><span class="em">🏠</span>
-      <span><span class="tt">3학년부 포털</span><span class="dd">선생님들께 공유하는 단일 주소</span></span><span class="tag share">배포용</span></a>
-    <a class="item" href="https://zeroyoung-collab.github.io/hn-jinhak-2027/"><span class="em">🎓</span>
-      <span><span class="tt">대입 지원현황</span><span class="dd">반별 지원·결과 입력 (대교협 이관용)</span></span><span class="tag">선생님용</span></a>
-    <a class="item" href="https://zeroyoung-collab.github.io/hn-apply-2027/admin.html"><span class="em">🔑</span>
-      <span><span class="tt">원서 계정 현황판</span><span class="dd">유웨이·진학사 제출 현황</span></span><span class="tag">선생님용</span></a>
-    <a class="item" href="https://zeroyoung-collab.github.io/hn-apply-2027/"><span class="em">📝</span>
-      <span><span class="tt">원서 계정 사전조사</span><span class="dd">학생 입력 폼</span></span><span class="tag share">학생 배포</span></a>
-    <a class="item" href="https://genuine-liger-0864c8.netlify.app/"><span class="em">🗺️</span>
-      <span><span class="tt">전국 대학 인터랙티브 지도</span><span class="dd">206개 대학 + 장바구니</span></span></a>
-    <a class="item" href="https://late-frost-4579.zeroyoung.workers.dev/"><span class="em">✏️</span>
-      <span><span class="tt">주말 모의고사 수요조사</span><span class="dd">토·일 응시 신청</span></span></a>
-    <a class="item" href="https://celadon-chimera-b46997.netlify.app/"><span class="em">📞</span>
-      <span><span class="tt">학부모 상담 예약</span><span class="dd">학년→반 선택 통합앱</span></span></a>
+<div class="wrap">
+  <div class="head">
+    <div class="en">HONAM HIGH SCHOOL · WORKSPACE</div>
+    <h1>업무 허브<small>2026학년도</small></h1>
   </div>
-  <div class="col sci">
-    <h2>과학과</h2>
-    <a class="item" href="https://zeroyoung-collab.github.io/hn-sci/"><span class="em">🏠</span>
-      <span><span class="tt">과학과 포털</span><span class="dd">과학과 선생님들께 공유하는 단일 주소</span></span><span class="tag share">배포용</span></a>
-    <a class="item" href="https://zeroyoung-collab.github.io/science-archive/"><span class="em">📚</span>
-      <span><span class="tt">과학과 활동 아카이브</span><span class="dd">소감문·SSI·통합·KENTECH</span></span></a>
-    <a class="item" href="https://zeroyoung-collab.github.io/science-archive/vote/"><span class="em">🗳️</span>
-      <span><span class="tt">SSI 탐구보고서 투표</span><span class="dd">전교생 투표 페이지</span></span><span class="tag share">학생 배포</span></a>
-    <a class="item" href="https://zeroyoung-collab.github.io/science-archive/vote/admin.html"><span class="em">📊</span>
-      <span><span class="tt">SSI 투표 현황판</span><span class="dd">실시간 집계</span></span><span class="tag">선생님용</span></a>
-    <a class="item" href="https://glistening-puppy-159fa5.netlify.app/"><span class="em">🔬</span>
-      <span><span class="tt">찾아오는 과학실험 수요조사</span><span class="dd">신청 폼</span></span></a>
-    <a class="item" href="https://stupendous-pavlova-4932ca.netlify.app/"><span class="em">⚗️</span>
-      <span><span class="tt">화학실험실 예약</span><span class="dd">실험실당 3명 선착순</span></span></a>
+  <div class="cols">
+    <div>
+      <div><span class="sec">3학년 · 대입</span></div>
+      <a class="item" href="https://zeroyoung-collab.github.io/hn3/">
+        <span class="t">3학년부 포털<small>선생님들께 공유하는 단일 주소</small></span><span class="tg s">배포용</span><span class="arw">→</span></a>
+      <a class="item" href="https://zeroyoung-collab.github.io/hn-jinhak-2027/">
+        <span class="t">대입 지원현황<small>반별 지원·결과 입력 (대교협 이관용)</small></span><span class="tg">선생님용</span><span class="arw">→</span></a>
+      <a class="item" href="https://zeroyoung-collab.github.io/hn-apply-2027/admin.html">
+        <span class="t">원서 계정 현황판<small>유웨이·진학사 제출 현황</small></span><span class="tg">선생님용</span><span class="arw">→</span></a>
+      <a class="item" href="https://zeroyoung-collab.github.io/hn-apply-2027/">
+        <span class="t">원서 계정 사전조사<small>학생 입력 폼</small></span><span class="tg s">학생 배포</span><span class="arw">→</span></a>
+      <a class="item" href="https://genuine-liger-0864c8.netlify.app/">
+        <span class="t">전국 대학 인터랙티브 지도<small>206개 대학 + 장바구니</small></span><span class="arw">→</span></a>
+      <a class="item" href="https://late-frost-4579.zeroyoung.workers.dev/">
+        <span class="t">주말 모의고사 수요조사<small>토·일 응시 신청</small></span><span class="arw">→</span></a>
+      <a class="item" href="https://celadon-chimera-b46997.netlify.app/">
+        <span class="t">학부모 상담 예약<small>학년→반 선택 통합앱</small></span><span class="arw">→</span></a>
+    </div>
+    <div>
+      <div><span class="sec g">과학과</span></div>
+      <a class="item" href="https://zeroyoung-collab.github.io/hn-sci/">
+        <span class="t">과학과 포털<small>과학과 선생님들께 공유하는 단일 주소</small></span><span class="tg s">배포용</span><span class="arw">→</span></a>
+      <a class="item" href="https://zeroyoung-collab.github.io/science-archive/">
+        <span class="t">과학과 활동 아카이브<small>소감문·SSI·통합·KENTECH</small></span><span class="arw">→</span></a>
+      <a class="item" href="https://zeroyoung-collab.github.io/science-archive/vote/">
+        <span class="t">SSI 탐구보고서 투표<small>전교생 투표 페이지</small></span><span class="tg s">학생 배포</span><span class="arw">→</span></a>
+      <a class="item" href="https://zeroyoung-collab.github.io/science-archive/vote/admin.html">
+        <span class="t">SSI 투표 현황판<small>실시간 집계</small></span><span class="tg">선생님용</span><span class="arw">→</span></a>
+      <a class="item" href="https://glistening-puppy-159fa5.netlify.app/">
+        <span class="t">찾아오는 과학실험 수요조사<small>신청 폼</small></span><span class="arw">→</span></a>
+      <a class="item" href="https://stupendous-pavlova-4932ca.netlify.app/">
+        <span class="t">화학실험실 예약<small>실험실당 3명 선착순</small></span><span class="arw">→</span></a>
+    </div>
   </div>
-</main>
-<footer>호남고등학교 · 2026학년도 개인 업무 허브 &nbsp;|&nbsp; 제작 · <b>호남고 조영신</b></footer>
+</div>
+<footer>호남고등학교 · 2026학년도 개인 업무 허브 &nbsp;|&nbsp; 제작 · 호남고 조영신</footer>
 </body>
 </html>
