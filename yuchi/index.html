@@ -88,6 +88,19 @@ body.home-on .tapzone{ display:none; }
 .backhome:active{ transform:translate(-50%,1px); }
 .slide[data-dark] .backhome{ background:rgba(255,255,255,.13); border:2px solid rgba(255,255,255,.38); box-shadow:none; }
 
+/* ── 좁은 화면(모바일) 보정 ── */
+@media (max-width:480px){
+  /* 진행 점 15개가 좌측 크레딧·우측 페이지번호와 겹쳐 숨김 (탭존·스와이프·페이지번호 내비는 유지) */
+  #dots{ display:none; }
+  /* 복귀 버튼이 상단 제목(.kick·h2)과 겹치지 않도록, 버튼 있는 슬라이드는 위에서부터 배치 + 버튼 공간 확보 */
+  /* 콘텐츠가 많은 슬라이드(해강반 4칸, 진로진학 6칸 등)는 375×667처럼 낮은 화면에서 overflow:hidden에 의해
+     하단이 크롬바(크레딧·페이지번호)와 겹치며 잘림 → 세로 스크롤 허용으로 전환(가로 스와이프 내비는 dx 기준이라 영향 없음) */
+  .slide:has(.backhome){
+    justify-content:flex-start; padding-top:76px;
+    overflow-y:auto; -webkit-overflow-scrolling:touch; touch-action:pan-y;
+  }
+}
+
 /* ── S2 문제 제기 ── */
 .s2{ background:#fff; }
 .s2 .big{ font-size:clamp(54px,8vw,104px); font-weight:900; color:var(--navy2); letter-spacing:-.04em; line-height:1.12; }
