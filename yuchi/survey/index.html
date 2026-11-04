@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>호남고 진학 선호도 설문 — 호남중 3학년</title>
+<style>
+:root{
+  --navy:#0B3E86; --navy2:#092f66; --gold:#F5B301; --gold-d:#b8850a;
+  --green:#1A9A3E; --red:#d64545; --ink:#15202e; --soft:#54606f;
+  --line:#c9d3e0; --lt:#eef3fa; --paper:#f5f8fc;
+}
+*{ margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html{ -webkit-text-size-adjust:100%; }
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",sans-serif;
+  color:var(--ink); background:var(--paper); word-break:keep-all; line-height:1.55;
+  min-height:100vh; display:flex; flex-direction:column;
+}
+.hidden{ display:none !important; }
+
+/* 상단 배너 (인앱 브라우저) */
+.iab{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+  padding:10px 14px; background:#fff7e6; border-bottom:2px solid var(--gold);
+  font-size:12.5px; font-weight:700; color:var(--navy2); line-height:1.45; }
+.iab b{ color:var(--gold-d); }
+.iab .acts{ display:flex; gap:6px; flex-shrink:0; }
+.iab .tbtn{ font:inherit; font-size:12px; font-weight:800; padding:8px 12px; border-radius:8px;
+  border:none; background:var(--navy); color:#fff; cursor:pointer; white-space:nowrap; min-height:40px; }
+.iab .tbtn.ghost{ background:#fff; color:var(--navy); border:1.5px solid var(--line); }
+.iab .tx{ font:inherit; font-size:15px; font-weight:900; background:none; border:none; color:var(--soft);
+  cursor:pointer; min-width:40px; min-height:40px; }
+
+/* 헤더 */
+header{ background:var(--navy); color:#fff; padding:16px 18px 15px; position:relative; overflow:hidden; }
+header::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:4px;
+  background:linear-gradient(90deg,var(--gold) 0 34%,transparent 34%); }
+header .eyebrow{ font-size:11.5px; font-weight:800; letter-spacing:.14em; color:var(--gold); }
+header h1{ font-size:20px; font-weight:900; letter-spacing:-.02em; margin-top:3px; }
+header .sub{ font-size:12.5px; font-weight:600; color:#c6d6f0; margin-top:4px; }
+
+main{ flex:1; width:100%; max-width:600px; margin:0 auto; padding:18px 16px 26px; }
+
+/* 입장(인증) 카드 */
+.gate{ background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:22px 20px; }
+.gate .lead{ font-size:14px; color:var(--soft); margin-bottom:18px; }
+.gate .lead b{ color:var(--navy); }
+.field{ margin-bottom:16px; }
+.field label{ display:block; font-size:13px; font-weight:800; color:var(--navy2); margin-bottom:7px; }
+.field label .tip{ font-weight:600; color:var(--soft); font-size:12px; }
+.field input{ width:100%; font:inherit; font-size:17px; font-weight:700; color:var(--ink);
+  padding:14px 14px; border:1.5px solid var(--line); border-radius:11px; background:#fbfdff; }
+.field input:focus{ outline:none; border-color:var(--navy); box-shadow:0 0 0 3px rgba(11,62,134,.12); }
+.btn-primary{ width:100%; font:inherit; font-size:16px; font-weight:900; color:#fff;
+  background:var(--navy); border:none; border-radius:12px; padding:15px; cursor:pointer;
+  min-height:52px; margin-top:4px; transition:background .15s ease; }
+.btn-primary:active{ background:var(--navy2); }
+.btn-primary:disabled{ background:#9aa8bb; cursor:default; }
+.note{ font-size:12px; color:var(--soft); margin-top:14px; text-align:center; line-height:1.6; }
+
+/* 진행 바 */
+.progress{ position:sticky; top:0; z-index:4; background:var(--paper); padding:6px 0 10px; margin-bottom:4px; }
+.progress .track{ height:7px; background:#dce5f1; border-radius:99px; overflow:hidden; }
+.progress .fill{ height:100%; width:0; background:linear-gradient(90deg,var(--navy),var(--gold));
+  border-radius:99px; transition:width .25s ease; }
+.progress .label{ font-size:11.5px; font-weight:700; color:var(--soft); margin-top:6px; text-align:right; }
+
+/* 문항 블록 */
+.q{ background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:17px 16px 18px;
+  margin-bottom:13px; border-left:5px solid var(--gold); }
+.q.flagged{ border-left-color:var(--red); box-shadow:0 0 0 2px rgba(214,69,69,.12); }
+.q .qhead{ display:flex; gap:9px; align-items:baseline; }
+.q .qnum{ flex-shrink:0; font-size:12px; font-weight:900; color:#fff; background:var(--navy);
+  border-radius:7px; padding:2px 8px; letter-spacing:.02em; }
+.q .qtitle{ font-size:15.5px; font-weight:800; color:var(--navy2); line-height:1.4; }
+.q .req{ color:var(--red); font-weight:900; margin-left:2px; }
+.q .qhint{ font-size:12px; font-weight:700; color:var(--gold-d); margin:8px 0 0 2px; }
+
+.opts{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.opt{ font:inherit; font-size:14px; font-weight:700; color:var(--soft); background:#fbfdff;
+  border:1.5px solid var(--line); border-radius:10px; padding:12px 15px; cursor:pointer;
+  flex:1 1 auto; min-height:46px; text-align:center; transition:all .12s ease; }
+.opt.multi{ flex:1 1 42%; }
+.opt.on{ background:var(--navy); border-color:var(--navy); color:#fff; }
+.q.multi .opt.on{ background:var(--green); border-color:var(--green); }
+
+.q textarea, .q .shortin{ width:100%; font:inherit; font-size:15px; color:var(--ink);
+  padding:12px 13px; border:1.5px solid var(--line); border-radius:10px; background:#fbfdff;
+  margin-top:12px; resize:none; }
+.q .shortin{ font-weight:700; }
+.q textarea{ min-height:84px; line-height:1.6; }
+.q textarea:focus, .q .shortin:focus{ outline:none; border-color:var(--navy);
+  box-shadow:0 0 0 3px rgba(11,62,134,.1); }
+
+.submitwrap{ margin-top:6px; }
+.err{ color:var(--red); font-size:13px; font-weight:800; text-align:center; margin-bottom:10px; display:none; }
+.err.show{ display:block; }
+
+/* 완료 화면 */
+.done{ background:#fff; border:1.5px solid var(--line); border-radius:16px; padding:44px 24px; text-align:center; }
+.done .mark{ width:70px; height:70px; margin:0 auto 18px; border-radius:50%;
+  background:var(--green); display:flex; align-items:center; justify-content:center; }
+.done .mark svg{ width:36px; height:36px; }
+.done h2{ font-size:22px; font-weight:900; color:var(--navy2); }
+.done p{ font-size:14px; color:var(--soft); margin-top:12px; line-height:1.7; }
+.done .who{ display:inline-block; margin-top:18px; font-size:13px; font-weight:800; color:var(--navy);
+  background:var(--lt); border-radius:9px; padding:9px 16px; }
+.done .again{ margin-top:22px; font:inherit; font-size:13.5px; font-weight:800; color:var(--soft);
+  background:#fff; border:1.5px solid var(--line); border-radius:10px; padding:11px 20px; cursor:pointer; }
+
+footer{ text-align:center; font-size:11px; color:#90a0b3; padding:10px 0 18px; }
+footer a{ color:#90a0b3; text-decoration:underline; cursor:pointer; }
+
+/* 로딩/토스트 */
+.veil{ position:fixed; inset:0; background:rgba(9,20,38,.4); display:flex; align-items:center;
+  justify-content:center; z-index:60; }
+.veil .box{ background:#fff; border-radius:14px; padding:22px 28px; font-size:14px; font-weight:800;
+  color:var(--navy2); }
+</style>
+</head>
+<body>
+
+<!-- 인앱 브라우저 안내 -->
+<div id="iab" class="iab hidden">
+  <div>⚠️ 카톡 등으로 열면 제출이 안 될 수 있어요. <b>크롬·사파리</b>로 열어 주세요.</div>
+  <div class="acts">
+    <button id="iabOpen" class="tbtn">기본 브라우저로</button>
+    <button id="iabCopy" class="tbtn ghost">주소 복사</button>
+    <button id="iabX" class="tx" aria-label="닫기">✕</button>
+  </div>
+</div>
+
+<header>
+  <div class="eyebrow">호남고등학교 입학 안내</div>
+  <h1>호남고 진학 선호도 설문</h1>
+  <div class="sub">호남중학교 3학년 대상 · 1~2분이면 끝나요</div>
+</header>
+
+<main>
+  <!-- 1단계: 입장 -->
+  <section id="gate" class="gate">
+    <p class="lead">여러분의 생각을 입학설명회와 학교 운영에 반영하기 위한 설문입니다.<br>
+      <b>학번과 이름</b>만 입력하면 바로 시작합니다.</p>
+    <div class="field">
+      <label for="sid">학번 <span class="tip">(4자리 숫자 · 예: 3101)</span></label>
+      <input id="sid" type="text" inputmode="numeric" maxlength="4" placeholder="3101" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="sname">이름</label>
+      <input id="sname" type="text" maxlength="12" placeholder="홍길동" autocomplete="off">
+    </div>
+    <button id="startBtn" class="btn-primary">설문 시작하기</button>
+    <p class="note">입력한 학번·이름은 중복 응답 확인에만 쓰이며, 명단으로 저장·공개되지 않습니다.</p>
+  </section>
+
+  <!-- 2단계: 설문 -->
+  <section id="form" class="hidden">
+    <div class="progress">
+      <div class="track"><div id="pfill" class="fill"></div></div>
+      <div id="plabel" class="label">0 / 7 응답</div>
+    </div>
+    <div id="qlist"></div>
+    <div class="submitwrap">
+      <div id="formErr" class="err"></div>
+      <button id="submitBtn" class="btn-primary">응답 제출하기</button>
+      <p class="note" id="editNote"></p>
+    </div>
+  </section>
+
+  <!-- 3단계: 완료 -->
+  <section id="done" class="done hidden">
+    <div class="mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+    </div>
+    <h2>응답 감사합니다!</h2>
+    <p>소중한 의견이 잘 접수되었어요.<br>입학설명회와 학교생활 안내에 반영하겠습니다.</p>
+    <div class="who" id="doneWho"></div>
+    <br>
+    <button id="editBtn" class="again">응답 수정하기</button>
+  </section>
+</main>
+
+<footer>
+  제작 · 호남고 조영신 &nbsp;·&nbsp; <a id="teacherLink">교사용 집계 보기</a>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+/* ───── 데이터(스키마): 문항 정의. 렌더/집계는 이 배열만 읽는다 ───── */
+const SURVEY = {
+  col: "pw_jinhak_survey",
+  questions: [
+    { id:"q1", type:"single", required:true, title:"호남고 진학 의향", options:["1지망","고민 중","타 고교 희망","미정"] },
+    { id:"q2", type:"single", title:"관심 계열", options:["인문","자연","예체능","아직 미정"] },
+    { id:"q3", type:"short", title:"희망 진로·직업", placeholder:"예: 간호사, 소프트웨어 개발자" },
+    { id:"q4", type:"multi", title:"고교 선택 시 중요하게 보는 것", hint:"복수 선택 가능",
+      options:["기숙사","통학 거리","면학 분위기","대입 실적","동아리·활동","특색 프로그램"] },
+    { id:"q5", type:"single", title:"기숙사 이용 희망", options:["희망","비희망","미정"] },
+    { id:"q6", type:"long", title:"호남고에 대해 궁금한 점 · 입학설명회에서 듣고 싶은 것",
+      placeholder:"예: 기숙사 생활이 궁금해요 / 동아리 종류를 알고 싶어요" },
+    { id:"q7", type:"single", title:"입학설명회·체험활동 참석 의향", options:["참석","고민 중","불참"] },
+  ]
+};
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBotwjsJxit4SbOzXVVOov37Po97AieoxM",
+  authDomain: "sangdam-b97c1.firebaseapp.com",
+  projectId: "sangdam-b97c1",
+  storageBucket: "sangdam-b97c1.firebasestorage.app",
+  messagingSenderId: "389048360844",
+  appId: "1:389048360844:web:675f4f6ce8d54a873140a9"
+};
+const db = getFirestore(initializeApp(firebaseConfig));
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const docIdOf = (sid, name) => (sid + "_" + name).replace(/[\/.#$\[\]]/g, "_");
+
+let answers = {};   // { q1:"1지망", q4:["기숙사", ...], q3:"...", ... }
+let state = { sid:"", name:"", docId:"", editing:false };
+
+/* ───── 렌더: 스키마 → 문항 UI ───── */
+function renderForm(){
+  $("qlist").innerHTML = SURVEY.questions.map((q, i) => {
+    let body = "";
+    if(q.type === "single" || q.type === "multi"){
+      body = `<div class="opts">` + q.options.map(o =>
+        `<button type="button" class="opt ${q.type==="multi"?"multi":""}" data-q="${q.id}" data-v="${esc(o)}">${esc(o)}</button>`
+      ).join("") + `</div>`;
+    } else if(q.type === "short"){
+      body = `<input type="text" class="shortin" data-q="${q.id}" maxlength="40" placeholder="${esc(q.placeholder||"")}" autocomplete="off">`;
+    } else if(q.type === "long"){
+      body = `<textarea data-q="${q.id}" maxlength="300" placeholder="${esc(q.placeholder||"")}"></textarea>`;
+    }
+    return `<div class="q ${q.type==="multi"?"multi":""}" id="qb_${q.id}">
+      <div class="qhead">
+        <span class="qnum">Q${i+1}</span>
+        <span class="qtitle">${esc(q.title)}${q.required?'<span class="req">*</span>':''}</span>
+      </div>
+      ${q.hint?`<div class="qhint">※ ${esc(q.hint)}</div>`:""}
+      ${body}
+      ${q.id==="q1" ? `<input type="text" class="shortin hidden" id="q1_other" maxlength="30" placeholder="예: ○○고등학교" autocomplete="off">` : ""}
+    </div>`;
+  }).join("");
+
+  // 단일/복수 선택 버튼
+  $("qlist").querySelectorAll(".opt").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const qid = btn.dataset.q, val = btn.dataset.v;
+      const q = SURVEY.questions.find(x => x.id === qid);
+      if(q.type === "single"){
+        answers[qid] = (answers[qid] === val) ? "" : val;   // 다시 누르면 해제
+      } else {
+        const arr = answers[qid] || [];
+        const k = arr.indexOf(val);
+        if(k >= 0) arr.splice(k, 1); else arr.push(val);
+        answers[qid] = arr;
+      }
+      syncOpts(qid);
+      if(qid === "q1") toggleQ1Other();
+      updateProgress();
+    });
+  });
+  // 주관식
+  $("qlist").querySelectorAll("[data-q].shortin, #qlist textarea").forEach(el => {
+    el.addEventListener("input", () => {
+      answers[el.dataset.q] = el.value.trim();
+      updateProgress();
+    });
+  });
+  // q1 서브입력(희망 학교명) — 스키마 외 조건부 필드
+  const q1o = $("q1_other");
+  if(q1o) q1o.addEventListener("input", () => { answers.q1_other = q1o.value.trim(); });
+}
+
+/* q1='타 고교 희망'일 때만 희망 학교명 입력칸 노출. 그 외엔 숨기고 값도 비움 */
+function toggleQ1Other(){
+  const el = $("q1_other");
+  if(!el) return;
+  if(answers.q1 === "타 고교 희망"){
+    el.classList.remove("hidden");
+  } else {
+    el.classList.add("hidden");
+    el.value = "";
+    answers.q1_other = "";
+  }
+}
+
+function syncOpts(qid){
+  const q = SURVEY.questions.find(x => x.id === qid);
+  document.querySelectorAll(`.opt[data-q="${qid}"]`).forEach(b => {
+    const on = q.type === "single" ? answers[qid] === b.dataset.v
+                                   : (answers[qid]||[]).includes(b.dataset.v);
+    b.classList.toggle("on", on);
+  });
+  $("qb_"+qid).classList.remove("flagged");
+}
+
+function answered(q){
+  const v = answers[q.id];
+  if(q.type === "multi") return (v||[]).length > 0;
+  return !!(v && String(v).trim());
+}
+function updateProgress(){
+  const n = SURVEY.questions.filter(answered).length;
+  const t = SURVEY.questions.length;
+  $("pfill").style.width = Math.round(n/t*100) + "%";
+  $("plabel").textContent = n + " / " + t + " 응답";
+}
+
+function fillAnswers(data){
+  answers = {};
+  SURVEY.questions.forEach(q => {
+    if(q.type === "multi") answers[q.id] = Array.isArray(data[q.id]) ? data[q.id].slice() : [];
+    else answers[q.id] = data[q.id] || "";
+  });
+  answers.q1_other = data.q1_other || "";
+  SURVEY.questions.forEach(q => {
+    if(q.type === "single" || q.type === "multi") syncOpts(q.id);
+    else {
+      const el = document.querySelector(`[data-q="${q.id}"]`);
+      if(el) el.value = answers[q.id] || "";
+    }
+  });
+  const q1o = $("q1_other");
+  if(q1o) q1o.value = answers.q1_other;
+  toggleQ1Other();
+  updateProgress();
+}
+
+/* ───── 화면 전환 ───── */
+function show(sec){
+  ["gate","form","done"].forEach(s => $(s).classList.toggle("hidden", s !== sec));
+  window.scrollTo(0, 0);
+}
+function veil(msg){
+  if(msg === false){ const v = document.querySelector(".veil"); if(v) v.remove(); return; }
+  if(document.querySelector(".veil")) return;
+  const d = document.createElement("div");
+  d.className = "veil"; d.innerHTML = `<div class="box">${esc(msg)}</div>`;
+  document.body.appendChild(d);
+}
+
+/* ───── 입장 ───── */
+$("startBtn").addEventListener("click", async () => {
+  const sid = $("sid").value.trim(), name = $("sname").value.trim();
+  if(!/^\d{4}$/.test(sid)){ alert("학번을 4자리 숫자로 입력해 주세요. (예: 3101)"); $("sid").focus(); return; }
+  if(name.length < 2){ alert("이름을 입력해 주세요."); $("sname").focus(); return; }
+
+  state.sid = sid; state.name = name; state.docId = docIdOf(sid, name);
+  const btn = $("startBtn"); btn.disabled = true; btn.textContent = "확인 중…";
+  try {
+    const snap = await getDoc(doc(db, SURVEY.col, state.docId));
+    renderForm();
+    if(snap.exists()){
+      const go = confirm(`${name} 학생은 이미 응답한 기록이 있습니다.\n기존 응답을 수정하시겠어요?`);
+      if(!go){ btn.disabled = false; btn.textContent = "설문 시작하기"; return; }
+      state.editing = true;
+      fillAnswers(snap.data());
+      $("editNote").textContent = "기존 응답을 수정 중입니다. 제출하면 덮어씌워집니다.";
+      $("submitBtn").textContent = "수정 내용 제출하기";
+    } else {
+      state.editing = false;
+      answers = {}; SURVEY.questions.forEach(q => { if(q.type==="multi") answers[q.id]=[]; });
+      updateProgress();
+      $("editNote").textContent = "";
+      $("submitBtn").textContent = "응답 제출하기";
+    }
+    show("form");
+  } catch(e){
+    alert("연결이 원활하지 않습니다. 잠시 후 다시 시도하거나 크롬·사파리로 열어 주세요.");
+  }
+  btn.disabled = false; btn.textContent = "설문 시작하기";
+});
+
+// 엔터로 다음 칸 / 시작
+$("sid").addEventListener("keydown", e => { if(e.key==="Enter"){ e.preventDefault(); $("sname").focus(); } });
+$("sname").addEventListener("keydown", e => { if(e.key==="Enter"){ e.preventDefault(); $("startBtn").click(); } });
+$("sid").addEventListener("input", () => { $("sid").value = $("sid").value.replace(/\D/g,"").slice(0,4); });
+
+/* ───── 제출 ───── */
+$("submitBtn").addEventListener("click", async () => {
+  // 필수 검증
+  const missing = SURVEY.questions.filter(q => q.required && !answered(q));
+  if(missing.length){
+    missing.forEach(q => $("qb_"+q.id).classList.add("flagged"));
+    const err = $("formErr");
+    err.textContent = "필수 문항(Q" + (SURVEY.questions.indexOf(missing[0])+1) + ")에 응답해 주세요.";
+    err.classList.add("show");
+    $("qb_"+missing[0].id).scrollIntoView({ behavior:"smooth", block:"center" });
+    return;
+  }
+  $("formErr").classList.remove("show");
+
+  const payload = { sid:state.sid, name:state.name };
+  SURVEY.questions.forEach(q => {
+    payload[q.id] = q.type === "multi" ? (answers[q.id]||[]) : (answers[q.id]||"");
+  });
+  // q1 서브입력: '타 고교 희망'일 때만 저장(그 외엔 공백)
+  payload.q1_other = (answers.q1 === "타 고교 희망") ? (answers.q1_other||"") : "";
+  const now = new Date();
+  payload.ts = now.getTime();
+  payload.tsLabel = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0") + "-" +
+    String(now.getDate()).padStart(2,"0") + " " + String(now.getHours()).padStart(2,"0") + ":" +
+    String(now.getMinutes()).padStart(2,"0");
+
+  const btn = $("submitBtn"); btn.disabled = true; btn.textContent = "제출 중…";
+  veil("제출 중…");
+  try {
+    await setDoc(doc(db, SURVEY.col, state.docId), payload);
+    veil(false);
+    $("doneWho").textContent = state.name + " 학생 · 응답 완료";
+    show("done");
+  } catch(e){
+    veil(false);
+    alert("제출에 실패했습니다. 인터넷 연결을 확인하고 다시 시도해 주세요.\n(카톡 등 앱 내 화면이면 크롬·사파리로 열어 주세요.)");
+  }
+  btn.disabled = false; btn.textContent = state.editing ? "수정 내용 제출하기" : "응답 제출하기";
+});
+
+/* 완료 → 수정 */
+$("editBtn").addEventListener("click", () => {
+  state.editing = true;
+  $("editNote").textContent = "기존 응답을 수정 중입니다. 제출하면 덮어씌워집니다.";
+  $("submitBtn").textContent = "수정 내용 제출하기";
+  show("form");
+});
+
+/* 교사용 링크 */
+$("teacherLink").addEventListener("click", () => { location.href = "admin.html"; });
+
+window.__booted = true;
+</script>
+
+<!-- 인앱 브라우저 안내 (모듈과 분리 — 모듈 실패에도 동작) -->
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var ua = navigator.userAgent || "";
+  var isApp = /KAKAOTALK|NAVER|Instagram|FBAN|FBAV|FB_IAB|Line\/|Daum|everytime|; wv\)/i.test(ua);
+  if(!isApp) return;
+  var bar = $("iab"); if(!bar) return;
+  bar.classList.remove("hidden");
+  var url = location.href.split("#")[0];
+  var isAndroid = /Android/i.test(ua), isiOS = /iPhone|iPad|iPod/i.test(ua);
+  var openBtn = $("iabOpen");
+  if(isAndroid){
+    openBtn.onclick = function(){ location.href = "intent://" + url.replace(/^https?:\/\//,"") + "#Intent;scheme=https;package=com.android.chrome;end;"; };
+  } else {
+    openBtn.textContent = isiOS ? "Safari로 열기" : "브라우저로 열기";
+    openBtn.onclick = function(){ alert("화면 오른쪽 위(또는 아래) 메뉴에서 ‘다른 브라우저로 열기 / Safari로 열기’를 눌러 주세요.\n\n또는 아래 주소를 직접 입력:\n" + url); };
+  }
+  $("iabCopy").onclick = function(){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){ $("iabCopy").textContent = "복사됨!"; }, function(){ window.prompt("아래 주소를 복사하세요", url); });
+    } else window.prompt("아래 주소를 복사하세요", url);
+  };
+  $("iabX").onclick = function(){ bar.classList.add("hidden"); };
+})();
+</script>
+</body>
+</html>

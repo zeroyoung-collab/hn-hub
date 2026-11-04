@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>진학 선호도 설문 — 교사용 집계</title>
+<style>
+:root{
+  --navy:#0B3E86; --navy2:#092f66; --gold:#F5B301; --gold-d:#b8850a;
+  --green:#1A9A3E; --red:#d64545; --ink:#15202e; --soft:#54606f;
+  --line:#c9d3e0; --lt:#eef3fa; --paper:#eef2f7;
+}
+*{ margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","맑은 고딕",sans-serif;
+  color:var(--ink); background:var(--paper); word-break:keep-all; line-height:1.5;
+}
+.hidden{ display:none !important; }
+
+/* 연결 뱃지 */
+.conn{ position:fixed; top:10px; right:12px; font-size:10.5px; font-weight:800; padding:4px 10px;
+  border-radius:99px; z-index:20; }
+.conn.on{ background:#e7f5ec; color:#136e2e; } .conn.off{ background:#fde8e8; color:#a02b2b; }
+
+/* 로그인 */
+.login{ max-width:380px; margin:14vh auto 0; background:#fff; border:1.5px solid var(--line);
+  border-radius:16px; padding:30px 26px; text-align:center; }
+.login .eyebrow{ font-size:11.5px; font-weight:800; letter-spacing:.14em; color:var(--gold-d); }
+.login h1{ font-size:20px; font-weight:900; color:var(--navy2); margin:4px 0 20px; }
+.login input{ width:100%; font:inherit; font-size:16px; text-align:center; letter-spacing:.05em;
+  padding:13px; border:1.5px solid var(--line); border-radius:11px; background:#fbfdff; }
+.login input:focus{ outline:none; border-color:var(--navy); box-shadow:0 0 0 3px rgba(11,62,134,.12); }
+.login button{ width:100%; font:inherit; font-size:15.5px; font-weight:900; color:#fff;
+  background:var(--navy); border:none; border-radius:11px; padding:14px; cursor:pointer; margin-top:12px; min-height:50px; }
+.login .hint{ font-size:12px; color:var(--soft); margin-top:14px; }
+
+/* 대시보드 레이아웃 */
+header{ background:var(--navy); color:#fff; padding:15px 20px; position:relative; }
+header::after{ content:""; position:absolute; left:0; bottom:0; height:4px; width:34%; background:var(--gold); }
+header .eyebrow{ font-size:11px; font-weight:800; letter-spacing:.14em; color:var(--gold); }
+header h1{ font-size:19px; font-weight:900; }
+.wrap{ max-width:1000px; margin:0 auto; padding:18px 16px 40px; }
+
+.toolbar{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:16px; }
+.kpi{ display:flex; align-items:baseline; gap:8px; background:#fff; border:1.5px solid var(--line);
+  border-radius:12px; padding:12px 18px; }
+.kpi .big{ font-size:30px; font-weight:900; color:var(--navy); line-height:1; }
+.kpi .lab{ font-size:12.5px; font-weight:700; color:var(--soft); }
+.toolbar .spacer{ flex:1; }
+.tbtn{ font:inherit; font-size:13px; font-weight:800; padding:11px 16px; border-radius:10px; cursor:pointer;
+  border:1.5px solid var(--line); background:#fff; color:var(--navy); min-height:44px; }
+.tbtn.primary{ background:var(--green); border-color:var(--green); color:#fff; }
+.tbtn.ghost{ color:var(--soft); }
+
+.grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+@media(max-width:720px){ .grid{ grid-template-columns:1fr; } }
+
+.panel{ background:#fff; border:1.5px solid var(--line); border-radius:14px; padding:16px 17px; }
+.panel.full{ grid-column:1 / -1; }
+.panel h2{ font-size:14.5px; font-weight:900; color:var(--navy2); margin-bottom:4px; }
+.panel .qt{ font-size:12px; font-weight:700; color:var(--soft); margin-bottom:13px; }
+
+/* 막대 집계 */
+.bar{ margin-bottom:11px; }
+.bar .top{ display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px; }
+.bar .top .nm{ font-weight:800; color:var(--ink); }
+.bar .top .vl{ font-weight:800; color:var(--navy); }
+.bar .top .vl span{ color:var(--soft); font-weight:700; font-size:12px; margin-left:4px; }
+.bar .track{ height:12px; background:#e6ecf4; border-radius:99px; overflow:hidden; }
+.bar .fill{ height:100%; border-radius:99px; transition:width .3s ease; background:var(--navy); }
+.bar.c0 .fill{ background:var(--navy); } .bar.c1 .fill{ background:var(--gold); }
+.bar.c2 .fill{ background:var(--green); } .bar.c3 .fill{ background:#7384a0; }
+.bar.c4 .fill{ background:#b8850a; } .bar.c5 .fill{ background:#2b6fb5; }
+
+/* 주관식 목록 */
+.txtlist{ max-height:340px; overflow-y:auto; margin:-4px -4px 0; padding:4px; }
+.txtitem{ font-size:13px; padding:9px 11px; border-bottom:1px solid #eef1f6; line-height:1.55; }
+.txtitem:last-child{ border-bottom:none; }
+.txtitem .who{ font-size:11px; font-weight:800; color:var(--gold-d); margin-right:7px; }
+.empty{ font-size:13px; color:#9aa8bb; padding:18px 4px; text-align:center; }
+
+/* 응답 테이블 */
+.tablewrap{ overflow-x:auto; border:1.5px solid var(--line); border-radius:12px; }
+table{ border-collapse:collapse; width:100%; font-size:12.5px; white-space:nowrap; }
+th,td{ padding:9px 10px; border-bottom:1px solid #eef1f6; text-align:left; }
+th{ background:var(--lt); font-weight:800; color:var(--navy2); position:sticky; top:0; }
+td.wrap{ white-space:normal; min-width:150px; max-width:240px; }
+tr:hover td{ background:#fafcff; }
+
+/* 응답 학번 목록 */
+.sidlist{ display:flex; flex-wrap:wrap; gap:6px; }
+.sidchip{ font-size:12px; font-weight:800; color:var(--navy); background:var(--lt);
+  border:1px solid #dbe4f0; border-radius:7px; padding:5px 9px; }
+
+footer{ text-align:center; font-size:11px; color:#90a0b3; padding:18px 0; }
+footer a{ color:#90a0b3; text-decoration:underline; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<div id="conn" class="conn off hidden">연결 중…</div>
+
+<!-- 로그인 -->
+<section id="login" class="login">
+  <div class="eyebrow">호남고등학교</div>
+  <h1>진학 선호도 설문 집계</h1>
+  <input id="pw" type="password" placeholder="교사용 비밀번호" autocomplete="off">
+  <button id="loginBtn">집계 열기</button>
+  <p class="hint">열람 권한이 있는 교사만 접속하세요.</p>
+</section>
+
+<!-- 대시보드 -->
+<div id="dash" class="hidden">
+  <header>
+    <div class="eyebrow">호남중 3학년 · 진학 선호도 설문</div>
+    <h1>실시간 집계 대시보드</h1>
+  </header>
+  <div class="wrap">
+    <div class="toolbar">
+      <div class="kpi"><span class="big" id="kCount">0</span><span class="lab">명 응답</span></div>
+      <div class="kpi"><span class="big" id="kFirst" style="color:var(--green)">0</span><span class="lab">명 1지망</span></div>
+      <div class="kpi"><span class="big" id="kJoin" style="color:var(--gold-d)">0</span><span class="lab">명 설명회 참석</span></div>
+      <div class="spacer"></div>
+      <button id="xlsxBtn" class="tbtn primary">엑셀 내려받기</button>
+      <button id="logoutBtn" class="tbtn ghost">잠그기</button>
+    </div>
+
+    <div class="grid" id="charts"></div>
+
+    <div class="panel full" id="q1otherPanel" style="margin-top:14px">
+      <h2>Q1 · '타 고교 희망' 응답 — 생각 중인 학교</h2>
+      <div class="qt">타 고교 희망 선택 학생이 적은 학교명 (미입력 학생은 제외)</div>
+      <div class="txtlist" id="q1otherlist"></div>
+    </div>
+
+    <div class="grid" style="margin-top:14px">
+      <div class="panel" id="q3panel">
+        <h2>Q3 · 희망 진로·직업</h2>
+        <div class="qt">주관식 응답 모음</div>
+        <div class="txtlist" id="q3list"></div>
+      </div>
+      <div class="panel" id="q6panel">
+        <h2>Q6 · 궁금한 점 · 듣고 싶은 것</h2>
+        <div class="qt">입학설명회 준비 참고</div>
+        <div class="txtlist" id="q6list"></div>
+      </div>
+    </div>
+
+    <div class="panel full" style="margin-top:14px">
+      <h2>응답 학번 목록 <span style="font-size:12px;font-weight:700;color:var(--soft)">(명단과 대조해 미응답 확인)</span></h2>
+      <div class="qt"></div>
+      <div class="sidlist" id="sidlist"></div>
+    </div>
+
+    <div class="panel full" style="margin-top:14px">
+      <h2>학번·이름별 응답 전체</h2>
+      <div class="qt">가로로 스크롤하면 전체 문항을 볼 수 있습니다.</div>
+      <div class="tablewrap">
+        <table id="tbl"><thead></thead><tbody></tbody></table>
+      </div>
+    </div>
+  </div>
+  <footer>제작 · 호남고 조영신 &nbsp;·&nbsp; <a id="stuLink">학생용 설문으로</a></footer>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+/* ───── 데이터(스키마): 학생용과 동일 정의. 집계/표는 이 배열만 읽는다 ───── */
+const SURVEY = {
+  col: "pw_jinhak_survey",
+  questions: [
+    { id:"q1", type:"single", title:"호남고 진학 의향", options:["1지망","고민 중","타 고교 희망","미정"] },
+    { id:"q2", type:"single", title:"관심 계열", options:["인문","자연","예체능","아직 미정"] },
+    { id:"q3", type:"short", title:"희망 진로·직업" },
+    { id:"q4", type:"multi", title:"고교 선택 시 중요하게 보는 것",
+      options:["기숙사","통학 거리","면학 분위기","대입 실적","동아리·활동","특색 프로그램"] },
+    { id:"q5", type:"single", title:"기숙사 이용 희망", options:["희망","비희망","미정"] },
+    { id:"q6", type:"long", title:"호남고에 대해 궁금한 점 · 듣고 싶은 것" },
+    { id:"q7", type:"single", title:"입학설명회·체험활동 참석 의향", options:["참석","고민 중","불참"] },
+  ]
+};
+const CHART_QS = ["q1","q2","q5","q7"];   // 단일·막대로 보여줄 문항
+const MULTI_Q = "q4";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBotwjsJxit4SbOzXVVOov37Po97AieoxM",
+  authDomain: "sangdam-b97c1.firebaseapp.com",
+  projectId: "sangdam-b97c1",
+  storageBucket: "sangdam-b97c1.firebasestorage.app",
+  messagingSenderId: "389048360844",
+  appId: "1:389048360844:web:675f4f6ce8d54a873140a9"
+};
+const db = getFirestore(initializeApp(firebaseConfig));
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const q = id => SURVEY.questions.find(x => x.id === id);
+
+let rows = [];
+let unsub = null;
+
+/* ───── 로그인 ───── */
+const TKEY = "jinhak_survey_teacher";
+function tryOpen(){ $("login").classList.add("hidden"); $("dash").classList.remove("hidden"); $("conn").classList.remove("hidden"); subscribe(); }
+$("loginBtn").addEventListener("click", () => {
+  if($("pw").value.trim() === "honam1234"){ sessionStorage.setItem(TKEY,"1"); tryOpen(); }
+  else alert("비밀번호가 맞지 않습니다. (영문 자판인지 확인해 주세요)");
+});
+$("pw").addEventListener("keydown", e => { if(e.key==="Enter") $("loginBtn").click(); });
+$("logoutBtn").addEventListener("click", () => { sessionStorage.removeItem(TKEY); location.reload(); });
+$("stuLink").addEventListener("click", () => { location.href = "index.html"; });
+const qpw = new URLSearchParams(location.search).get("pw");
+if(sessionStorage.getItem(TKEY)==="1" || qpw==="honam1234"){ if(qpw) sessionStorage.setItem(TKEY,"1"); tryOpen(); }
+
+/* ───── 실시간 구독 + 지수 백오프 재구독 ───── */
+function subscribe(){
+  let delay = 2000, timer = null, inRetry = false;
+  (function start(){
+    unsub = onSnapshot(collection(db, SURVEY.col),
+      snap => {
+        if(inRetry){ inRetry = false; }
+        delay = 2000;
+        $("conn").className = "conn on";
+        $("conn").textContent = "실시간 연결됨";
+        rows = [];
+        snap.forEach(d => {
+          const v = d.data() || {};
+          if(!v.sid || !v.name) return;
+          rows.push(v);
+        });
+        rows.sort((a,b) => (a.sid||"").localeCompare(b.sid||"") || (b.ts||0)-(a.ts||0));
+        renderAll();
+      },
+      () => {
+        inRetry = true;
+        $("conn").className = "conn off";
+        $("conn").textContent = "재연결 중…";
+        try{ unsub && unsub(); }catch(e){}
+        clearTimeout(timer); timer = setTimeout(start, delay); delay = Math.min(delay*2, 30000);
+      });
+  })();
+}
+
+/* ───── 집계 유틸 ───── */
+function tallySingle(qid){
+  const opts = q(qid).options;
+  const map = {}; opts.forEach(o => map[o] = 0);
+  let other = 0;
+  rows.forEach(r => { const v = r[qid]; if(v==null||v==="") return; if(v in map) map[v]++; else other++; });
+  return { opts, map, other };
+}
+function tallyMulti(qid){
+  const opts = q(qid).options;
+  const map = {}; opts.forEach(o => map[o] = 0);
+  rows.forEach(r => (Array.isArray(r[qid])?r[qid]:[]).forEach(v => { if(v in map) map[v]++; }));
+  return { opts, map };
+}
+
+/* ───── 렌더 ───── */
+function renderAll(){
+  // KPI
+  $("kCount").textContent = rows.length;
+  $("kFirst").textContent = rows.filter(r => r.q1==="1지망").length;
+  $("kJoin").textContent  = rows.filter(r => r.q7==="참석").length;
+
+  renderCharts();
+  renderQ1Other();
+  renderTextList("q3", "q3list");
+  renderTextList("q6", "q6list");
+  renderSidList();
+  renderTable();
+}
+
+function barBlock(qt, qtitle, entries, total){
+  const bars = entries.map(([nm, cnt], i) => {
+    const pct = total ? Math.round(cnt/total*100) : 0;
+    return `<div class="bar c${i%6}">
+      <div class="top"><span class="nm">${esc(nm)}</span><span class="vl">${cnt}<span>${pct}%</span></span></div>
+      <div class="track"><div class="fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join("");
+  return `<div class="panel">
+    <h2>${esc(qt)}</h2><div class="qt">${esc(qtitle)}</div>
+    ${entries.length ? bars : '<div class="empty">아직 응답이 없습니다.</div>'}
+  </div>`;
+}
+
+function renderCharts(){
+  let html = "";
+  CHART_QS.forEach((qid, idx) => {
+    const t = tallySingle(qid);
+    const entries = t.opts.map(o => [o, t.map[o]]);
+    if(t.other) entries.push(["기타", t.other]);
+    const num = SURVEY.questions.indexOf(q(qid)) + 1;
+    html += barBlock("Q"+num+" · "+q(qid).title, "단일 선택", entries, rows.length);
+  });
+  // Q4 복수선택 — 응답자 대비 비율
+  const tm = tallyMulti(MULTI_Q);
+  const mEntries = tm.opts.map(o => [o, tm.map[o]]).sort((a,b) => b[1]-a[1]);
+  const num4 = SURVEY.questions.indexOf(q(MULTI_Q)) + 1;
+  html += barBlock("Q"+num4+" · "+q(MULTI_Q).title, "복수 선택 · 응답자 대비 선택 비율", mEntries, rows.length);
+  $("charts").innerHTML = html;
+}
+
+function renderQ1Other(){
+  // '타 고교 희망' 응답자 중 학교명을 적은 학생만
+  const items = rows.filter(r => r.q1 === "타 고교 희망" && r.q1_other && String(r.q1_other).trim());
+  const total = rows.filter(r => r.q1 === "타 고교 희망").length;
+  $("q1otherlist").innerHTML = items.length
+    ? items.map(r => `<div class="txtitem"><span class="who">${esc(r.sid)} ${esc(r.name)}</span>${esc(r.q1_other)}</div>`).join("")
+    : `<div class="empty">${total ? "학교명을 적은 학생이 아직 없습니다." : "'타 고교 희망' 응답이 아직 없습니다."}</div>`;
+}
+
+function renderTextList(qid, elId){
+  const items = rows.filter(r => r[qid] && String(r[qid]).trim());
+  $(elId).innerHTML = items.length
+    ? items.map(r => `<div class="txtitem"><span class="who">${esc(r.sid)} ${esc(r.name)}</span>${esc(r[qid])}</div>`).join("")
+    : '<div class="empty">아직 응답이 없습니다.</div>';
+}
+
+function renderSidList(){
+  const sids = [...new Set(rows.map(r => r.sid))].sort();
+  $("sidlist").innerHTML = sids.length
+    ? sids.map(s => `<span class="sidchip">${esc(s)}</span>`).join("")
+    : '<div class="empty">아직 응답이 없습니다.</div>';
+}
+
+function renderTable(){
+  const cols = SURVEY.questions;
+  $("tbl").querySelector("thead").innerHTML =
+    "<tr><th>학번</th><th>이름</th>" +
+    cols.map((c,i) => `<th>Q${i+1}</th>`).join("") +
+    "<th>제출시각</th></tr>";
+  const tb = $("tbl").querySelector("tbody");
+  if(!rows.length){ tb.innerHTML = `<tr><td colspan="${cols.length+3}" class="empty">아직 응답이 없습니다.</td></tr>`; return; }
+  tb.innerHTML = rows.map(r => {
+    const cells = cols.map(c => {
+      let v = r[c.id];
+      if(Array.isArray(v)) v = v.join(", ");
+      const wrap = (c.type==="short"||c.type==="long"||c.type==="multi") ? ' class="wrap"' : "";
+      return `<td${wrap}>${esc(v||"")}</td>`;
+    }).join("");
+    return `<tr><td>${esc(r.sid)}</td><td>${esc(r.name)}</td>${cells}<td>${esc(r.tsLabel||"")}</td></tr>`;
+  }).join("");
+}
+
+/* ───── 엑셀 내려받기 (온디맨드 로드) ───── */
+let xlsxReady = false;
+function loadXLSX(){
+  return new Promise((res, rej) => {
+    if(window.XLSX){ res(); return; }
+    const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
+    s.onload = () => res(); s.onerror = () => rej();
+    document.head.appendChild(s);
+  });
+}
+$("xlsxBtn").addEventListener("click", async () => {
+  if(!rows.length){ alert("내려받을 응답이 없습니다."); return; }
+  const btn = $("xlsxBtn"); btn.disabled = true; btn.textContent = "준비 중…";
+  try{
+    await loadXLSX();
+    const cols = SURVEY.questions;
+    const head = ["학번","이름", ...cols.map((c,i) => "Q"+(i+1)+" "+c.title), "Q1 희망학교(타 고교)", "제출시각"];
+    const body = rows.map(r => [
+      r.sid, r.name,
+      ...cols.map(c => Array.isArray(r[c.id]) ? r[c.id].join(", ") : (r[c.id]||"")),
+      r.q1_other || "",
+      r.tsLabel || ""
+    ]);
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet([head, ...body]);
+    ws["!cols"] = head.map((h,i) => ({ wch: i<2 ? 8 : (i>=4 && i<=head.length-2 ? 20 : 16) }));
+    XLSX.utils.book_append_sheet(wb, ws, "응답");
+    const d = new Date();
+    const fn = "호남중_진학선호도설문_" + d.getFullYear() + String(d.getMonth()+1).padStart(2,"0") + String(d.getDate()).padStart(2,"0") + ".xlsx";
+    XLSX.writeFile(wb, fn);
+  }catch(e){
+    alert("엑셀 모듈을 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.");
+  }
+  btn.disabled = false; btn.textContent = "엑셀 내려받기";
+});
+</script>
+</body>
+</html>
