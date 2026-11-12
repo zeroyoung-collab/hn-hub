@@ -197,6 +197,19 @@
     return merged;
   }
 
+  // ---- 글자 폭 비례로 가림 구간 좌표 계산 (괄호·숫자처럼 좁은 글자 보정) ----
+  const _mc=document.createElement("canvas").getContext("2d");
+  function spanBox(str, a, b, it){
+    if(!str.length) return [it.x, it.w];
+    _mc.font = Math.max(8, it.fh) + "px \"Malgun Gothic\",\"맑은 고딕\",\"Batang\",sans-serif";
+    const W = _mc.measureText(str).width || 1;
+    const x0 = _mc.measureText(str.slice(0,a)).width / W * it.w;
+    const x1 = _mc.measureText(str.slice(0,b)).width / W * it.w;
+    const pad = it.fh * 0.25;                       // 앞뒤 여유(경계 글자 노출 방지)
+    const L = Math.max(it.x, it.x + x0 - pad), R = Math.min(it.x + it.w + pad, it.x + x1 + pad);
+    return [L, R - L];
+  }
+
   // ---- 자동 담임 이름 추출(1페이지) ----
   function autoTeacherNames(items){
     const names=new Set();
@@ -285,8 +298,7 @@
           } else {
             const spans=maskSpans(s, names);
             for(const [a,b] of spans){
-              const sx=it.x + (s.length? (a/s.length)*it.w : 0);
-              const sw=(s.length? ((b-a)/s.length)*it.w : it.w);
+              const [sx, sw] = spanBox(s, a, b, it);
               drawBox(ctx, sx, it.top, sw, it.fh);
               const reason=classify(s.slice(a,b), names);
               if(counts[reason]!=null) counts[reason]++;
