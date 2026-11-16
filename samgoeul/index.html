@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta name="robots" content="noindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>샘고을 중학교만을 위한 호남고등학교 안내</title>
+<style>
+  :root { --navy:#17306b; --navy-2:#24479a; --ink:#1a1a1a; --text:#333; --muted:#6b6b6b; --line:#e5e5e5; --bg:#f5f5f7; --white:#ffffff; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:"Noto Sans KR","Apple SD Gothic Neo",sans-serif; color:var(--text); background:var(--white); line-height:1.6; -webkit-font-smoothing:antialiased; word-break:keep-all; overflow-wrap:break-word; }
+  h1, h2, h3 { text-wrap:balance; }
+  p, li, td, th, .a, .c, .cap { text-wrap:pretty; }
+  a { color:inherit; text-decoration:none; }
+
+  /* Header + tabs */
+  header.gnb { position:sticky; top:0; z-index:10; background:#fff; border-bottom:1px solid var(--line); }
+  .gnb-top { max-width:1200px; margin:0 auto; padding:0 24px; height:60px; display:flex; align-items:center; }
+  .fsbtn { margin-left:auto; border:1px solid var(--navy); background:#fff; color:var(--navy); border-radius:999px; padding:8px 18px; font-family:inherit; font-size:14px; font-weight:700; cursor:pointer; }
+  .fsbtn:hover { background:var(--navy); color:#fff; }
+  .logo { font-weight:900; font-size:20px; color:var(--navy); letter-spacing:-0.02em; }
+  .logo small { font-weight:500; font-size:13px; color:var(--muted); margin-left:8px; }
+  nav.tabs { max-width:1200px; margin:0 auto; padding:0 24px; display:flex; gap:4px; overflow-x:auto; border-top:1px solid var(--line); }
+  nav.tabs a { flex:none; padding:16px 18px; font-size:16px; color:var(--text); border-bottom:3px solid transparent; }
+  nav.tabs a:hover { color:var(--navy); }
+  nav.tabs a.on { color:var(--navy); font-weight:700; border-bottom-color:var(--navy); }
+
+  /* Pages */
+  .page { display:none; }
+  .page.on { display:block; }
+  .wrap { max-width:1200px; margin:0 auto; padding:0 24px; }
+  .pad { padding:96px 0; }
+  .alt { background:var(--bg); }
+  .eyebrow { font-size:14px; font-weight:700; color:var(--navy-2); margin-bottom:12px; }
+  h2.title { font-size:46px; font-weight:700; color:var(--ink); line-height:1.25; letter-spacing:-0.02em; margin-bottom:20px; }
+  h2.title.sm { font-size:34px; }
+  p.lead { font-size:19px; color:var(--muted); max-width:760px; }
+  .note { font-size:14px; color:var(--muted); margin-top:16px; }
+  h3.card-title { font-size:20px; font-weight:700; color:var(--ink); margin-bottom:10px; }
+
+  /* Hero */
+  .hero { position:relative; height:auto; aspect-ratio:1400 / 447; min-height:460px; color:#fff; background:var(--navy) url("img/00.jpg") center/cover no-repeat; }
+  .hero::before { content:""; position:absolute; inset:0; background:linear-gradient(90deg, rgba(10,25,60,0.88) 0%, rgba(10,25,60,0.5) 60%, rgba(10,25,60,0.25) 100%); }
+  .hero-inner { position:relative; max-width:1200px; margin:0 auto; padding:0 24px; height:100%; display:flex; flex-direction:column; justify-content:center; gap:18px; }
+  .hero .date { font-size:16px; color:#f3d47a; font-weight:500; }
+  .hero h1 { font-size:58px; font-weight:900; line-height:1.2; letter-spacing:-0.02em; }
+  .hero p { font-size:19px; color:#e6ecf7; max-width:620px; }
+
+  /* Buttons */
+  .btn { display:inline-block; padding:14px 28px; border-radius:999px; background:#fff; color:var(--navy); font-weight:700; font-size:16px; }
+  .btn.dark { background:var(--navy); color:#fff; }
+  .btn.dark:hover { background:var(--navy-2); }
+  .pager { display:flex; justify-content:space-between; align-items:center; gap:16px; border-top:1px solid var(--line); margin-top:72px; padding-top:32px; }
+  .pager .hint { font-size:14px; color:var(--muted); }
+  .next { display:inline-block; padding:16px 30px; border-radius:999px; background:var(--navy); color:#fff; font-weight:700; font-size:16px; }
+  .next:hover { background:var(--navy-2); }
+
+  /* Intro stats */
+  .intro-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:48px; }
+  .intro-stats div { background:var(--bg); border-radius:16px; padding:36px 28px; }
+  .intro-stats .n { font-size:88px; font-weight:900; color:var(--navy); line-height:1; letter-spacing:-0.03em;  white-space:nowrap; }
+  .intro-stats .n small { font-size:.4em; font-weight:700; margin-left:6px; }
+  .intro-stats .c { font-size:16px; color:var(--text); margin-top:12px; }
+  .facts { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; margin-top:48px; }
+  .facts img { width:100%; height:400px; object-fit:cover; border-radius:20px; }
+
+  /* Deep answers with charts */
+  .deep { margin-top:56px; display:flex; flex-direction:column; gap:40px; }
+  .deep-title { font-size:clamp(26px,2.4vw,40px); font-weight:700; color:var(--navy); margin-bottom:8px; }
+  .deep-item { background:#fff; border:1px solid var(--line); border-radius:20px; padding:44px; }
+  .dq { font-size:clamp(20px,1.7vw,28px); font-weight:700; color:var(--ink); margin-bottom:16px; }
+  .da { font-size:clamp(16px,1.3vw,21px); color:var(--text); }
+  .viz { background:var(--bg); border-radius:16px; padding:28px 32px; margin-top:24px; }
+  .viz-title { font-size:clamp(16px,1.3vw,21px); font-weight:700; color:var(--navy); margin-bottom:16px; }
+  .bar { display:flex; align-items:center; gap:16px; margin:10px 0; }
+  .bl { width:clamp(120px,9vw,180px); flex:none; font-size:clamp(15px,1.2vw,19px); color:var(--ink); font-weight:500; }
+  .bt { flex:1; position:relative; height:clamp(38px,3vw,54px); background:#e3e8f2; border-radius:8px; }
+  .bf { height:100%; background:var(--navy); color:#fff; font-weight:700; border-radius:8px; display:flex; align-items:center; justify-content:flex-end; padding-right:14px; font-size:clamp(15px,1.2vw,19px); white-space:nowrap; }
+  .bf.mid { background:#6f8fd0; }
+  .bf.total { background:#c9961b; color:#1a1a1a; }
+  .bf.light { background:#a9b9dc; color:#1a1a1a; }
+  .rf { position:absolute; top:0; bottom:0; background:var(--navy); color:#fff; font-weight:700; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:clamp(14px,1.1vw,18px); white-space:nowrap; }
+  .rf.next { background:#c9961b; color:#1a1a1a; }
+  .axis { display:flex; justify-content:space-between; font-size:14px; color:var(--muted); margin:8px 0 0 calc(clamp(120px,9vw,180px) + 16px); }
+  .viz table { width:100%; border-collapse:collapse; background:#fff; font-size:clamp(15px,1.2vw,19px); }
+  .viz th, .viz td { padding:12px 16px; border-bottom:1px solid var(--line); text-align:center; }
+  .viz th:first-child, .viz td:first-child { text-align:left; }
+  .viz td.hl { color:var(--navy); font-weight:700; }
+  .why { margin-top:24px; background:#fff; border:1px solid var(--line); border-radius:16px; padding:28px 32px; }
+  .why h5 { font-size:clamp(18px,1.5vw,24px); color:var(--navy); margin-bottom:10px; }
+  .why li { font-size:clamp(16px,1.3vw,21px); margin:8px 0 8px 18px; }
+  .src-note { font-size:14px; color:var(--muted); }
+
+  .kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:28px; }
+  .kpis.two { grid-template-columns:repeat(2,1fr); }
+  .kpi { background:var(--bg); border-radius:16px; padding:28px 28px; }
+  .kpi .k-l { display:block; font-size:clamp(15px,1.2vw,19px); color:var(--muted); margin-bottom:8px; }
+  .kpi b { display:block; font-size:clamp(36px,3.4vw,56px); font-weight:900; color:var(--navy); line-height:1.1; }
+  .kpi.hl { background:var(--navy); }
+  .kpi.hl .k-l { color:#dfe7f6; }
+  .kpi.hl b { color:#fff; }
+  .chart-cap { font-size:14px; color:var(--muted); margin-top:14px; }
+  .cols { display:flex; align-items:flex-end; gap:20px; height:300px; margin-top:32px; padding:0 8px; border-bottom:2px solid var(--line); }
+  .col { flex:1; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:8px; }
+  .col-n { font-size:clamp(16px,1.3vw,22px); font-weight:700; color:var(--ink); }
+  .col-bar { width:100%; max-width:120px; background:#b9c6e3; border-radius:10px 10px 0 0; }
+  .col.hl .col-bar { background:var(--navy); }
+  .col-l { font-size:clamp(15px,1.2vw,19px); color:var(--text); padding-bottom:10px; }
+  .sub-t { font-size:clamp(18px,1.5vw,24px); color:var(--navy); margin-top:40px; }
+  .legend { display:flex; gap:24px; font-size:clamp(14px,1.1vw,18px); color:var(--text); margin-top:14px; }
+  .sw { display:inline-block; width:14px; height:14px; border-radius:3px; margin-right:8px; vertical-align:middle; }
+  .sw.s1, .g-b.s1 { background:var(--navy); }
+  .sw.s2, .g-b.s2 { background:#6f8fd0; }
+  .sw.s3, .g-b.s3 { background:#c9d3ea; }
+  .gchart { margin-top:12px; }
+  .g-row { display:flex; align-items:center; gap:20px; padding:10px 0; border-bottom:1px solid var(--line); }
+  .g-row:last-child { border-bottom:none; }
+  .g-n { width:clamp(120px,9vw,170px); flex:none; font-size:clamp(16px,1.3vw,20px); color:var(--ink); font-weight:500; }
+  .g-bars { flex:1; display:flex; flex-direction:column; gap:5px; }
+  .g-b { height:clamp(24px,2vw,34px); border-radius:6px; color:#fff; font-size:clamp(14px,1.1vw,17px); font-weight:700; display:flex; align-items:center; justify-content:flex-end; padding-right:10px; white-space:nowrap; min-width:44px; }
+  .g-b.s3 { color:var(--ink); }
+  @media (max-width:700px) { .kpis, .kpis.two { grid-template-columns:1fr; } }
+
+  .stack { display:flex; height:clamp(56px,4.4vw,80px); margin-top:16px; border-radius:12px; overflow:hidden; }
+  .seg { display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:clamp(14px,1.2vw,19px); white-space:nowrap; }
+  .seg.s1 { background:#17306b; }
+  .seg.s2 { background:#24479a; }
+  .seg.s3 { background:#6f8fd0; }
+  .seg.s4 { background:#a9b9dc; color:#1a1a1a; }
+  .seg.s5 { background:#d5dded; color:#1a1a1a; }
+  .calc { margin-top:16px; }
+  .calc-label { display:block; font-size:clamp(17px,1.4vw,22px); color:var(--ink); }
+  .calc-label b { color:var(--navy); font-size:1.2em; }
+  .calc-range { width:100%; margin-top:18px; accent-color:#17306b; height:8px; }
+  .ptabs { display:flex; gap:12px; flex-wrap:wrap; margin-top:40px; }
+  .ptab { border:1px solid var(--line); background:#fff; border-radius:999px; padding:14px 28px; font-family:inherit; font-size:clamp(16px,1.3vw,20px); font-weight:700; color:var(--muted); cursor:pointer; transition:background .2s,color .2s; }
+  .ptab:hover { color:var(--navy); }
+  .ptab[aria-selected="true"] { background:var(--navy); color:#fff; border-color:var(--navy); }
+  .ppanel { display:none; margin-top:28px; background:var(--bg); border-radius:20px; padding:clamp(28px,3vw,56px); }
+  .ppanel.on { display:block; animation:pfade .35s ease; }
+  @keyframes pfade { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+  .ppanel h3 { font-size:clamp(24px,2.2vw,36px); font-weight:800; color:var(--navy); margin-bottom:20px; word-break:keep-all; }
+  .ppanel .checklist li { font-size:clamp(16px,1.3vw,20px); }
+  #rec-record, #rec-interview { scroll-margin-top:110px; }
+  .topic-nav { display:flex; flex-wrap:wrap; gap:12px; margin-top:64px; padding-top:32px; border-top:1px solid var(--line); }
+  .topic-nav .lbl { width:100%; font-size:15px; font-weight:700; color:var(--muted); margin-bottom:4px; }
+  .tnav { border:1px solid var(--line); background:#fff; border-radius:999px; padding:14px 28px; font-family:inherit; font-size:clamp(16px,1.3vw,20px); font-weight:700; color:var(--muted); cursor:pointer; transition:background .2s,color .2s; }
+  .tnav:hover { background:var(--navy); color:#fff; border-color:var(--navy); }
+  #rec-csat { scroll-margin-top:110px; }
+  .oneline { white-space:nowrap; max-width:none; }
+  @media (max-width:900px) { .oneline { white-space:normal; } }
+  @media (min-width:1000px) {
+    .snap { min-height:calc(100vh - 130px); display:flex; flex-direction:column; justify-content:center; }
+    .split.snap { display:grid; align-content:center; }
+  }
+  .analysis { display:none; }
+  .cmp-tools button.cmp-analyze { border-color:#17306b; color:#17306b; }
+  .amodal { position:fixed; inset:0; background:rgba(10,14,25,.6); display:none; align-items:center; justify-content:center; z-index:90; padding:24px; }
+  .amodal.on { display:flex; }
+  .amodal-box { position:relative; background:#fff; border-radius:20px; width:min(1500px,96vw); max-height:92vh; overflow:auto; padding:40px 44px 44px; box-shadow:0 20px 60px rgba(0,0,0,.35); }
+  .amodal-x { position:sticky; top:0; float:right; border:1px solid var(--navy); background:#fff; color:var(--navy); border-radius:999px; padding:8px 18px; font-family:inherit; font-size:15px; font-weight:700; cursor:pointer; }
+  .amodal-x:hover { background:var(--navy); color:#fff; }
+  .amodal-body { clear:both; }
+  .amodal-body .title.sm { font-size:clamp(28px,2.4vw,40px); }
+  .amodal-body p.lead { font-size:clamp(17px,1.3vw,22px); }
+  .ex-img { display:block; width:auto; height:auto; max-width:min(100%,820px); margin:0 auto; border-radius:16px; border:1px solid var(--line); }
+  .nat-panel { margin-top:48px; }
+  .nat-h { font-size:clamp(28px,2.6vw,44px); font-weight:900; color:var(--navy); line-height:1.3; margin-bottom:28px; word-break:keep-all; }
+  .nat-grid4 { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .nat-card { background:var(--bg); border-radius:20px; padding:36px 40px; }
+  .nat-num { width:52px; height:52px; border-radius:50%; background:#e3a72f; color:#fff; font-weight:900; font-size:22px; display:flex; align-items:center; justify-content:center; margin-bottom:20px; }
+  .nat-card h4 { font-size:clamp(22px,1.9vw,30px); font-weight:800; color:var(--navy); margin-bottom:14px; word-break:keep-all; }
+  .nat-card p { font-size:clamp(17px,1.4vw,22px); color:var(--text); line-height:1.6; word-break:keep-all; }
+  .nat-core { margin-top:24px; background:var(--navy); color:#fff; border-radius:16px; padding:26px 34px; font-size:clamp(18px,1.6vw,26px); font-weight:500; }
+  .nat-core span { color:#f3d47a; font-weight:900; margin-right:18px; }
+  .nat-panel .note { margin-top:14px; }
+  .nat-flow { display:grid; grid-template-columns:1fr 56px 1fr; gap:20px; align-items:stretch; }
+  .nat-step { background:var(--bg); border-radius:20px; padding:40px; }
+  .nat-step.warm { background:#fbefd5; }
+  .nat-badge { display:inline-block; background:#b8862b; color:#fff; border-radius:999px; padding:8px 18px; font-size:16px; font-weight:700; }
+  .nat-badge.dark { background:var(--navy); }
+  .nat-step h4 { font-size:clamp(24px,2.1vw,34px); font-weight:800; color:var(--navy); margin:22px 0 10px; word-break:keep-all; }
+  .nat-step p { font-size:clamp(17px,1.4vw,22px); color:var(--text); }
+  .nat-box { margin-top:26px; background:#fff; border-radius:14px; padding:20px 22px; text-align:center; font-size:clamp(17px,1.4vw,21px); font-weight:700; color:var(--navy); word-break:keep-all; }
+  .nat-box.alert { color:#c0392b; text-align:left; }
+  .nat-arrow { align-self:center; width:44px; height:72px; background:#e3a72f; clip-path:polygon(0 0,60% 50%,0 100%,25% 100%,85% 50%,25% 0); justify-self:center; }
+  @media (max-width:900px) { .nat-grid4, .nat-flow { grid-template-columns:1fr; } .nat-arrow { display:none; } .nat-card, .nat-step { padding:28px; } }
+  .pass-list { display:flex; flex-direction:column; gap:32px; margin-top:40px; }
+  .pass-fig { margin:0; background:#f4f5f7; border-radius:24px; padding:28px; border:1px solid var(--line); }
+  .pass-fig img { display:block; width:100%; height:auto; border-radius:12px; }
+  .cmp-tools { display:flex; gap:12px; margin:28px 0 24px; }
+  .cmp-tools button { border:1px solid var(--navy); background:#fff; color:var(--navy); border-radius:999px; padding:12px 24px; font-family:inherit; font-size:16px; font-weight:700; cursor:pointer; }
+  .cmp-tools button:hover:not(:disabled) { background:var(--navy); color:#fff; }
+  .cmp-tools button:disabled { opacity:.5; cursor:default; }
+  .cmp-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
+  .cmp-grid.cmp-stack { grid-template-columns:1fr; max-width:1100px; }
+  @media (max-width:900px) { .cmp-grid { grid-template-columns:1fr; } }
+  .cmp-card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px; }
+  .cmp-card img { display:block; width:100%; height:auto; border-radius:8px; cursor:zoom-in; }
+  .cmp-lb { position:fixed; inset:0; background:rgba(10,14,25,.88); display:none; align-items:center; justify-content:center; z-index:100; padding:24px; cursor:zoom-out; }
+  .cmp-lb.on { display:flex; }
+  .cmp-lb img { display:block; background:#fff; border-radius:8px; }
+  .cmp-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .cmp-tag { font-weight:900; font-size:22px; color:var(--navy); }
+  .cmp-grade { min-width:110px; text-align:center; padding:8px 16px; border-radius:999px; background:var(--bg); color:var(--muted); font-size:16px; font-weight:700; }
+  .cmp-grade.show { background:var(--navy); color:#fff; }
+  .ppanel .go { display:inline-block; margin-top:28px; background:none; border:0; padding:0; font-family:inherit; font-size:clamp(16px,1.3vw,20px); font-weight:700; color:var(--navy); cursor:pointer; }
+  table.mini { width:100%; border-collapse:collapse; margin-top:16px; background:#fff; font-size:clamp(15px,1.2vw,19px); }
+  table.mini th, table.mini td { padding:12px 16px; border-bottom:1px solid var(--line); text-align:center; }
+  table.mini th:first-child, table.mini td:first-child { text-align:left; }
+  table.mini th { color:var(--muted); font-weight:500; font-size:clamp(14px,1.1vw,17px); }
+  table.mini tr.us td { background:#fdf6e3; color:var(--navy); }
+
+  /* Questions */
+  .qlist { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:48px; }
+  .qgroup { background:var(--bg); border-radius:16px; padding:32px 28px; }
+  .qgroup h3 { font-size:20px; font-weight:700; color:var(--navy); margin-bottom:16px; }
+  .qgroup ol { padding-left:22px; }
+  .qgroup li { font-size:17px; color:var(--ink); padding:8px 0; line-height:1.5; }
+
+  /* FAQ */
+  .faq-group { margin-top:48px; }
+  .faq-group:first-of-type { margin-top:40px; }
+  .faq-group h3 { font-size:24px; font-weight:700; color:var(--navy); margin-bottom:20px; padding-bottom:12px; border-bottom:2px solid var(--navy); }
+  .faq-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .faq { background:#fff; border:1px solid var(--line); border-radius:16px; padding:32px; }
+  .faq .q { font-size:18px; font-weight:700; color:var(--ink); margin-bottom:12px; }
+  .faq .q::before { content:"Q. "; color:var(--navy-2); }
+  .faq .a { font-size:16px; color:var(--text); }
+
+  /* Cards */
+  .cards { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:48px; }
+  .cards.three { grid-template-columns:repeat(3,1fr); }
+  .cards.six { grid-template-columns:repeat(6,1fr); }
+  .cards.five { grid-template-columns:repeat(5,1fr); }
+  .card { background:#fff; border-radius:16px; padding:32px 28px; border:1px solid var(--line); }
+  .card .big { font-size:40px; font-weight:900; color:var(--navy); line-height:1.1; margin-bottom:10px; }
+  .card p { font-size:15px; color:var(--muted); }
+
+  /* Stats */
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:48px; }
+  .stat { background:var(--bg); border-radius:16px; padding:48px 32px; }
+  .stat .num { font-size:96px; font-weight:900; color:var(--navy); line-height:1; letter-spacing:-0.03em; }
+  .stat .num small { font-size:36px; font-weight:700; margin-left:4px; }
+  .stat .cap { font-size:17px; color:var(--text); margin-top:14px; }
+
+  /* Split */
+  .split { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+  .split img { width:100%; height:440px; object-fit:cover; border-radius:20px; }
+  .checklist { list-style:none; margin-top:24px; }
+  .checklist li { font-size:17px; padding:14px 0; border-bottom:1px solid var(--line); }
+  .checklist li b { color:var(--navy); margin-right:8px; }
+
+  /* Steps */
+  .steps { display:grid; grid-template-columns:repeat(4,1fr); border-top:2px solid var(--navy); margin-top:48px; }
+  .steps div { padding:28px 24px 0 0; }
+  .steps .n { font-size:14px; font-weight:700; color:var(--navy-2); }
+  .steps h3 { font-size:20px; font-weight:700; color:var(--ink); margin:8px 0; }
+  .steps p { font-size:15px; color:var(--muted); }
+
+  /* Highlight */
+  .highlight { background:var(--navy); color:#fff; border-radius:20px; padding:64px; margin-top:48px; display:flex; justify-content:space-between; align-items:center; gap:40px; }
+  .highlight .num { font-size:96px; font-weight:900; color:#f3d47a; line-height:1; }
+  .highlight p { font-size:18px; color:#e6ecf7; max-width:460px; }
+  .highlight h3 { font-size:28px; font-weight:700; margin-bottom:12px; }
+
+  /* Timeline */
+  .timeline { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:48px; }
+  .timeline div { border-top:4px solid var(--navy); padding-top:24px; }
+  .timeline .d { font-size:28px; font-weight:900; color:var(--navy); }
+  .timeline h3 { font-size:19px; font-weight:700; color:var(--ink); margin:8px 0 6px; }
+  .timeline p { font-size:15px; color:var(--muted); }
+
+  /* Tables */
+  table.tiers { width:100%; border-collapse:collapse; margin-top:32px; font-size:17px; }
+  table.tiers th, table.tiers td { text-align:left; padding:16px 20px; border-bottom:1px solid var(--line); }
+  table.tiers th { font-size:14px; color:var(--muted); font-weight:500; }
+  table.tiers td.amt { font-weight:700; color:var(--navy); }
+
+  /* Contact */
+  .contact { background:#111; color:#bdbdbd; border-radius:20px; padding:56px; margin-top:48px; }
+  .contact .big { font-size:32px; font-weight:700; color:#fff; margin-bottom:24px; }
+  .contact .row { display:flex; gap:56px; flex-wrap:wrap; font-size:16px; }
+  .contact b { color:#fff; font-weight:500; }
+
+  @media (min-width:1000px) {
+    .wrap, .gnb-top, nav.tabs, .hero-inner { max-width:none; padding-left:clamp(24px,4vw,110px); padding-right:clamp(24px,4vw,110px); }
+    .gnb-top { height:72px; }
+    .pad { padding:clamp(72px,8vw,140px) 0; }
+    h2.title { font-size:clamp(36px,3.4vw,68px); }
+    h2.title.sm { font-size:clamp(30px,2.8vw,54px); }
+    p.lead { font-size:clamp(18px,1.5vw,26px); }
+    .hero h1 { font-size:clamp(44px,4.4vw,88px); }
+    .hero p { font-size:clamp(18px,1.6vw,26px); }
+    .hero .date { font-size:clamp(15px,1.3vw,22px); }
+    .intro-stats .n { font-size:clamp(80px,8vw,168px); }
+    .intro-stats .c { font-size:clamp(15px,1.3vw,22px); }
+    .stat .num { font-size:clamp(64px,6vw,128px); }
+    .stat .cap { font-size:clamp(16px,1.3vw,22px); }
+    .card .big { font-size:clamp(32px,3vw,56px); }
+    .card p { font-size:clamp(15px,1.2vw,20px); }
+    .faq .q { font-size:clamp(18px,1.4vw,24px); }
+    .faq .a { font-size:clamp(16px,1.3vw,22px); }
+    .qlist { grid-template-columns:1fr; gap:28px; }
+    .qgroup { padding:40px 48px; }
+    .qgroup h3 { font-size:clamp(26px,2.2vw,38px); margin-bottom:20px; }
+    .qgroup li { font-size:clamp(22px,1.8vw,32px); padding:12px 0; line-height:1.45; }
+    .faq-group h3 { font-size:clamp(22px,1.9vw,32px); }
+    .checklist li { font-size:clamp(16px,1.3vw,22px); }
+    .steps h3 { font-size:clamp(18px,1.6vw,26px); }
+    .steps p { font-size:clamp(15px,1.2vw,20px); }
+    .highlight .num { font-size:clamp(64px,6vw,128px); }
+    .highlight h3 { font-size:clamp(22px,2vw,34px); }
+    .highlight p { font-size:clamp(16px,1.4vw,22px); }
+    .timeline .d { font-size:clamp(22px,2.2vw,36px); }
+    .timeline h3 { font-size:clamp(18px,1.6vw,26px); }
+    .timeline p { font-size:clamp(15px,1.2vw,20px); }
+    .eyebrow { font-size:clamp(14px,1.2vw,20px); }
+    nav.tabs a { font-size:clamp(15px,1.2vw,20px); }
+    table.tiers { font-size:clamp(16px,1.3vw,22px); }
+    .split img { height:clamp(400px,36vw,640px); }
+    .contact .big { font-size:clamp(26px,2.4vw,44px); }
+    .contact .row { font-size:clamp(16px,1.3vw,22px); }
+    .next { font-size:clamp(16px,1.3vw,22px); }
+  }
+
+  @media (max-width:900px) {
+    .hero h1 { font-size:40px; }
+    h2.title { font-size:34px; }
+    .intro-stats, .cards, .cards.three, .cards.six, .cards.five, .stats, .steps, .timeline, .qlist { grid-template-columns:1fr 1fr; }
+    .faq-grid, .split, .facts { grid-template-columns:1fr; }
+    .highlight { flex-direction:column; align-items:flex-start; padding:40px; }
+    .pad { padding:72px 0; }
+  }
+  @media (max-width:560px) {
+    .intro-stats, .cards, .cards.three, .stats, .steps, .timeline, .qlist { grid-template-columns:1fr; }
+    .hero h1 { font-size:32px; }
+    .pager { flex-direction:column; align-items:stretch; }
+    .pager .hint { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="gnb">
+  <div class="gnb-top">
+    <div class="logo">샘고을 중학교만을 위한 호남고등학교 안내</div>
+    <button id="fsBtn" class="fsbtn" type="button">전체화면</button>
+  </div>
+  <nav class="tabs">
+    <a href="#intro">소개</a>
+    <a href="#questions">사전 질문</a>
+    <a href="#answers">질문 답변</a>
+    <a href="#admission">대입 · 내신</a>
+    <a href="#records">생기부 · 면접</a>
+    <a href="#dorm">학습 · 기숙사</a>
+    <a href="#schedule">장학 · 일정</a>
+  </nav>
+</header>
+
+<!-- 1. 소개 -->
+<div class="page" id="intro">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="date">2026년 11월 16일(월) 15:30 · 샘고을 중학교</div>
+      <h1>호남고등학교 학교설명회(추가)</h1>
+      <p class="oneline">학생과 학부모님이 보내 주신 질문을 숫자와 근거로 하나씩 확인해 드립니다.</p>
+    </div>
+  </div>
+  <section class="pad">
+    <div class="wrap">
+      <div class="eyebrow">01 · 학교 소개</div>
+      <h2 class="title oneline">80년의 전통, 지금은 남녀공학 기숙형 고교</h2>
+      <p class="lead oneline">정읍에 있는 호남고등학교는 한 학년 120명, 6학급으로 운영합니다. 공부할 환경과 진로를 함께 챙기는 학교입니다.</p>
+      <div class="intro-stats">
+        <div><div class="n">120<small>명</small></div><div class="c">한 학년 모집 정원 (6학급)</div></div>
+        <div><div class="n">54<small>명</small></div><div class="c">의학계열 합격 (최근 5개년)</div></div>
+        <div><div class="n">360<small>명</small></div><div class="c">수도권 및 주요 대학 합격 (최근 5개년)</div></div>
+        <div><div class="n">100<small>명+</small></div><div class="c">서울대 누적 합격 (1982~2024)</div></div>
+      </div>
+      <p class="note">출처: 2026 호남고 소식지, 2027 입학설명회 자료</p>
+      <div class="pager">
+        <span class="hint">다음은 사전 질문 목록입니다</span>
+        <a class="next" href="#questions">사전 질문 보기 →</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 2. 사전 질문 목록 -->
+<div class="page" id="questions">
+  <section class="pad">
+    <div class="wrap">
+      <div class="eyebrow">02 · 사전 질문</div>
+      <h2 class="title">사전에 받은 질문</h2>
+      <p class="lead oneline">질문 15개를 분야별로 모았습니다. 관련 답변은 다음 페이지에서 확인하세요.</p>
+      <div class="qlist">
+        <div class="qgroup">
+          <h3>내신 · 학업</h3>
+          <ol>
+            <li>다른 학교에서 수행평가 비중을 높인다는데, 호남고는 어떤가요?</li>
+            <li>지필평가에서 실수해도 만회할 수 있나요?</li>
+            <li>상위권 학생이 많아 내신 따기가 어렵지 않나요?</li>
+            <li>중학교 성적이 높지 않은데 진학해도 괜찮을까요?</li>
+            <li>5등급제란 무엇이고, 정원 충원 현황과 어떤 관계가 있나요?</li>
+          </ol>
+        </div>
+        <div class="qgroup">
+          <h3>면학 · 학교생활</h3>
+          <ol start="6">
+            <li>남녀합반인데 수업 분위기가 산만하지 않나요?</li>
+            <li>공부 잘하는 학생만 특별히 챙긴다는 소문이 사실인가요?</li>
+            <li>학교 시설은 실제로 어떻게 쓰이나요?</li>
+            <li>공부에 전념할 수 있는 환경은 어떻게 갖춰져 있나요?</li>
+          </ol>
+        </div>
+        <div class="qgroup">
+          <h3>기숙사 · 진로</h3>
+          <ol start="10">
+            <li>기숙사 입소 기준과 선발 방식은 어떻게 되나요?</li>
+            <li>기숙사에 있으면서 외부 학원을 다닐 수 있나요?</li>
+            <li>기숙사 하루 일과와 선발 기준은 어떻게 되나요?</li>
+            <li>의약학계열이나 사관학교를 희망하면 어떤 준비를 하나요?</li>
+            <li>아직 진로가 정해지지 않았는데 불리하지 않을까요?</li>
+            <li>사관학교 합격 실적은 어떻게 되나요?</li>
+          </ol>
+        </div>
+      </div>
+      <div class="pager">
+        <span class="hint">질문마다 답변이 준비되어 있습니다</span>
+        <a class="next" href="#answers">질문 답변 보기 →</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 3. 질문 답변 -->
+<div class="page" id="answers">
+  <section class="pad">
+    <div class="wrap">
+      <div class="eyebrow">03 · 질문 답변</div>
+      <h2 class="title">사전 질문 답변</h2>
+
+      <div class="faq-group">
+        <h3>내신 · 학업</h3>
+        <div class="faq-grid">
+                    <div class="faq"><div class="q">지필평가에서 실수해도 만회할 수 있나요?</div><div class="a">수업 태도와 과정형 과제를 성실히 하면 수행평가 만점으로 등급을 충분히 보완할 수 있습니다.</div></div>
+                              <div class="faq"><div class="q">중학교 성적이 높지 않은데 진학해도 괜찮을까요?</div><div class="a">중학교 순위가 고교 등급을 정하지 않습니다. 고1 집중 관리로 내신을 크게 올린 사례가 많고, 기초 학력 보충 프로그램도 있습니다.</div></div>
+                  </div>
+      </div>
+
+      <div class="deep">
+        <div class="eyebrow">내신 심층 답변</div>
+        <h3 class="deep-title">5등급제, 상위권 내신, 수행평가를 한눈에 정리합니다</h3>
+        <div class="nat-panel">
+          <h3 class="nat-h">내신 변별력이 약해지자, 대학은 평가 방법을 바꿨습니다</h3>
+          <div class="nat-grid4">
+            <div class="nat-card"><div class="nat-num">1</div><h4>교과전형에도 정성평가</h4><p>연세대 추천형: 교과 100% → 단계별 전형, 서류평가 20% 추가. 교과 성적은 석차등급 70% + 성취도 30%로 산출</p></div>
+            <div class="nat-card"><div class="nat-num">2</div><h4>수시 수능 최저기준 유지</h4><p>서울대는 수시 전체 최저 폐지, 그러나 서·연·고 수시 일반전형 전체로 보면 약 42%는 여전히 최저 적용</p></div>
+            <div class="nat-card"><div class="nat-num">3</div><h4>학종·논술 확대 (수도권)</h4><p>수도권 대학 학생부종합 1,724명 증가, 논술 11,443명으로 증가, 학생부교과는 333명 감소</p></div>
+            <div class="nat-card"><div class="nat-num">4</div><h4>정시에도 학생부 반영</h4><p>서울대 정시 2단계 교과역량평가 40%, 연세대 정시 학생부종합평가(서류) 신설. 서·연·고 정시의 62.3%가 학생부 반영</p></div>
+          </div>
+          <div class="nat-core"><span>핵심</span>2028 대입은 내신 숫자 + 학생부 내용 + 수능, 세 가지를 모두 봅니다</div>
+          <p class="note">자료: 각 대학 2028학년도 입학전형 시행계획(2026.4.), 대교협 보도자료(2026.4.30.)</p>
+        </div>
+
+        <article class="deep-item snap">
+          <h4 class="dq">Q. 5등급제란 무엇이고, 정원 충원 현황과 어떤 관계가 있나요?</h4>
+          <p class="da">5등급제는 등급을 비율로 나눕니다. 1등급은 상위 10%, 1~2등급은 상위 34%입니다. 그래서 한 학년 학생 수가 많을수록 1등급 자리가 늘어납니다. 호남고는 2026학년도 모집 정원 120명을 모두 채웠습니다.</p>
+
+          <h5 class="sub-t">등급별 누적 비율</h5>
+          <div class="stack">
+            <div class="seg s1" style="width:10%">1등급 10%</div>
+            <div class="seg s2" style="width:24%">2등급 ~34%</div>
+            <div class="seg s3" style="width:32%">3등급 ~66%</div>
+            <div class="seg s4" style="width:24%">4등급 ~90%</div>
+            <div class="seg s5" style="width:10%">5등급</div>
+          </div>
+          <p class="chart-cap">각 칸의 수치는 해당 등급까지 쌓인 누적 비율입니다.</p>
+
+          <h5 class="sub-t">직접 계산해 보기</h5>
+          <div class="calc">
+            <label class="calc-label" for="stu">한 학년 학생 수 <b id="nv">0</b>명</label>
+            <input class="calc-range" type="range" id="stu" min="0" max="120" step="1" value="0">
+            <div class="kpis">
+              <div class="kpi"><span class="k-l">1등급 인원</span><b id="r1">12명</b></div>
+              <div class="kpi"><span class="k-l">2등급 인원</span><b id="r2">29명</b></div>
+              <div class="kpi hl"><span class="k-l">1~2등급 총인원</span><b id="r12">41명</b></div>
+            </div>
+            <p class="chart-cap">슬라이더를 움직이면 학생 수에 따라 인원이 바로 바뀝니다. 단순 비율 계산이며 동점자 처리는 반영하지 않았습니다.</p>
+          </div>
+
+          <h5 class="sub-t">2026학년도 신입생 충원 결과</h5>
+          <table class="mini">
+            <tr><th>학교</th><th>모집 정원</th><th>실제 인원</th><th>미달</th></tr>
+            <tr class="us"><td><b>호남고</b></td><td>120명</td><td><b>120명</b></td><td><b>0명</b></td></tr>
+            <tr><td>A고</td><td>80명</td><td>78명</td><td>-2명</td></tr>
+            <tr><td>B고</td><td>100명</td><td>97명</td><td>-3명</td></tr>
+            <tr><td>C고</td><td>120명</td><td>87명</td><td>-33명</td></tr>
+            <tr><td>D고</td><td>120명</td><td>115명</td><td>-5명</td></tr>
+            <tr><td>E고</td><td>120명</td><td>100명</td><td>-20명</td></tr>
+          </table>
+          <p class="chart-cap">출처: 학교알리미(2026.5.) 공시 기준, 입학설명회 자료</p>
+        </article>
+
+        <article class="deep-item snap">
+          <h4 class="dq">Q. 상위권 학생이 많아 내신 따기가 어렵지 않나요?</h4>
+          <p class="da">학생 수가 많아 1~2등급 자리가 41명으로 넉넉하게 확보됩니다. 수행평가 비중이 높아질수록 시험 한 번의 결과보다 수업 참여와 과정 평가의 몫이 커집니다. 수행평가를 높이고 있는 가운데에도 성취도 A 비율은 관내 학교보다 높게 나타납니다.</p>
+
+          <div class="why">
+            <h5>성취도는 왜 중요할까요?</h5>
+            <ul>
+              <li>2028 대입에서는 등급과 함께 성취도(A~E)도 반영됩니다.</li>
+              <li>경희대 학종은 절대평가 요소인 성취도를 적극 반영합니다.</li>
+              <li>성취도 A는 다른 학생과 경쟁하지 않는 절대평가라, 기준을 채우면 받을 수 있습니다.</li>
+            </ul>
+          </div>
+
+          <div class="kpis">
+            <div class="kpi hl"><span class="k-l">호남고 성취도 A 평균</span><b>21.66%</b></div>
+            <div class="kpi"><span class="k-l">관내 B고</span><b>11.65%</b></div>
+            <div class="kpi"><span class="k-l">관내 A고</span><b>7.26%</b></div>
+          </div>
+
+          <h5 class="sub-t">과목별 성취도 A 비율 (%)</h5>
+          <div class="legend"><span><i class="sw s1"></i>호남고</span><span><i class="sw s2"></i>관내 B고</span><span><i class="sw s3"></i>관내 A고</span></div>
+          <div class="gchart">
+            <div class="g-row"><span class="g-n">공통국어1</span><div class="g-bars"><div class="g-b s1" style="width:73%">22.0</div><div class="g-b s2" style="width:57%">17.2</div><div class="g-b s3" style="width:36%">10.9</div></div></div>
+            <div class="g-row"><span class="g-n">공통수학1</span><div class="g-bars"><div class="g-b s1" style="width:30%">8.9</div><div class="g-b s2" style="width:19%">5.7</div><div class="g-b s3" style="width:4%">0.0</div></div></div>
+            <div class="g-row"><span class="g-n">공통영어1</span><div class="g-bars"><div class="g-b s1" style="width:92%">27.6</div><div class="g-b s2" style="width:50%">14.9</div><div class="g-b s3" style="width:33%">9.9</div></div></div>
+            <div class="g-row"><span class="g-n">한국사1</span><div class="g-bars"><div class="g-b s1" style="width:65%">19.5</div><div class="g-b s2" style="width:42%">12.6</div><div class="g-b s3" style="width:30%">8.9</div></div></div>
+            <div class="g-row"><span class="g-n">통합사회1</span><div class="g-bars"><div class="g-b s1" style="width:81%">24.4</div><div class="g-b s2" style="width:46%">13.8</div><div class="g-b s3" style="width:40%">11.9</div></div></div>
+            <div class="g-row"><span class="g-n">통합과학1</span><div class="g-bars"><div class="g-b s1" style="width:92%">27.6</div><div class="g-b s2" style="width:19%">5.7</div><div class="g-b s3" style="width:7%">2.0</div></div></div>
+          </div>
+          <p class="chart-cap">2026학년도 1학년 1학기 기준 · 관내 학교는 A·B고로 표기</p>
+        </article>
+
+        <article class="deep-item snap">
+          <h4 class="dq">Q. 다른 학교에서 수행평가 비중을 높인다는데, 호남고는 어떤가요?</h4>
+          <p class="da">현재 수행평가 비중은 40~50%입니다. 내년부터는 50%에서 많게는 60%까지 늘릴 계획입니다. 올해 2학기부터 시험 단계로 운영하고 있으며, 긍정적인 성과가 나타나고 있습니다. 수행평가는 집에서 하는 숙제가 아니라 수업 시간 안의 발표, 토론, 탐구 보고서로 이뤄집니다.</p>
+
+          <div class="kpis two">
+            <div class="kpi"><span class="k-l">현재</span><b>40~50%</b></div>
+            <div class="kpi hl"><span class="k-l">내년 계획</span><b>50~60%</b></div>
+          </div>
+        </article>
+
+        <p class="src-note">출처: 2027 입학설명회 자료, 2026학년도 1학년 1학기 성취도 비교, 학교알리미(2026.5.)</p>
+      </div>
+
+      <div class="faq-group">
+        <h3>면학 · 학교생활</h3>
+        <div class="faq-grid">
+          <div class="faq"><div class="q">남녀합반인데 수업 분위기가 산만하지 않나요?</div><div class="a">수업 시간에는 교사의 엄격한 수업 관리가 이루어지고, 학습 전용 공간이 따로 있습니다. 생활 지도 규정도 엄격히 적용합니다.</div></div>
+          <div class="faq"><div class="q">공부 잘하는 학생만 특별히 챙긴다는 소문이 사실인가요?</div><div class="a">사실이 아닙니다. 전교생 개개인의 진로와 적성에 맞춘 세특을 쓰고, 모든 교사가 수업 중 참여 과정을 관찰해 기록합니다. <span style="display:inline-block;margin-top:8px;color:#17306b;font-weight:700">이 부분은 뒤에서 더 자세히 살펴보겠습니다 → <a href="#records" style="color:#17306b;text-decoration:underline">생기부 · 면접</a></span></div></div>
+          <div class="faq"><div class="q">학교 시설은 실제로 어떻게 쓰이나요?</div><div class="a">자체 앱으로 학사 일정과 상담 신청을 관리합니다. 홈베이스와 스터디룸은 자기주도 학습 공간이고, AI 탐구실은 심화 탐구의 거점입니다.</div></div>
+          <div class="faq"><div class="q">공부에 전념할 수 있는 환경은 어떻게 갖춰져 있나요?</div><div class="a">공간, 자습, 학습 프로그램 세 가지로 준비했습니다. 일반 학생은 야간 자습을 1일 최대 3시간, 기숙사 학생은 최대 6시간 할 수 있고, 학기마다 「순공 60」 습관 프로젝트를 운영합니다.</div></div>
+        </div>
+      </div>
+
+      <div class="faq-group">
+        <h3>기숙사 · 진로</h3>
+        <div class="faq-grid">
+          <div class="faq"><div class="q">기숙사 입소 기준과 선발 방식은 어떻게 되나요?</div><div class="a">원거리 통학생뿐 아니라 자기주도 학습 습관을 잡고 싶은 학생을 폭넓게 선발합니다. 생활관과 전용 정독실을 갖추고 있습니다.</div></div>
+          <div class="faq"><div class="q">기숙사에 있으면서 외부 학원을 다닐 수 있나요?</div><div class="a">사교육(외부 학원)은 금·토·일에 허용됩니다. 학교 공부와 사교육 보충이 조화롭게 이루어지도록 합니다.</div></div>
+          <div class="faq"><div class="q">기숙사 하루 일과와 선발 기준은 어떻게 되나요?</div><div class="a">평일에는 아침 점호부터 밤 11시 30분까지 자습 시간이 정해져 있고, 희망자는 심야 자습도 할 수 있습니다. 2027학년도 선발은 중학교 내신 300점과 해강 선발고사 150점을 합해 450점으로 이뤄집니다.</div></div>
+          <div class="faq"><div class="q">의약학계열이나 사관학교를 희망하면 어떤 준비를 하나요?</div><div class="a">의약학 희망 학생은 심화 실험과 공동교육과정으로 전문 세특을 준비합니다. 사관학교 희망 학생은 학과 시험 대비와 1:1 진학 지도를 받습니다.</div></div>
+          <div class="faq"><div class="q">아직 진로가 정해지지 않았는데 불리하지 않을까요?</div><div class="a">중3에 진로가 정해지지 않은 것은 자연스럽습니다. 1학년 공통과정에서 계열 탐색 검사와 멘토링, 창의적 체험활동으로 꿈을 찾을 수 있습니다.</div></div>
+          <div class="faq"><div class="q">사관학교 합격 실적은 어떻게 되나요?</div><div class="a">최근 3년간 사관학교 합격자는 2024년 11명, 2025년 9명, 2026년 15명입니다.</div></div>
+        </div>
+        <table class="tiers" style="max-width:820px">
+          <tr><th>연도</th><th>사관학교 합격 인원</th></tr>
+          <tr><td>2024</td><td class="amt">11명</td></tr>
+          <tr><td>2025</td><td class="amt">9명</td></tr>
+          <tr><td>2026</td><td class="amt">15명</td></tr>
+        </table>
+      </div>
+
+      <div class="pager">
+        <span class="hint">다음은 대입 · 내신 내용입니다</span>
+        <a class="next" href="#admission">대입 · 내신 보기 →</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 4. 대입 · 내신 -->
+<div class="page" id="admission">
+  <section class="pad">
+    <div class="wrap">
+      <div class="eyebrow">합격 실적</div>
+      <h2 class="title oneline">최근 합격자 명단</h2>
+      <div class="pass-list">
+        <figure class="pass-fig"><img src="img/01.jpg" alt="2026학년도 대입 합격자 명단 · 의학계열, 수도권 및 주요 대학" loading="lazy"></figure>
+        <figure class="pass-fig"><img src="img/02.jpg" alt="서울대학교 합격자 (1982~2026년)" loading="lazy"></figure>
+        <figure class="pass-fig"><img src="img/03.jpg" alt="2027년 경찰대 및 사관학교 1차 합격자 명단" loading="lazy"></figure>
+        <figure class="pass-fig"><img src="img/04.jpg" alt="2027년 KAIST 1차 합격자" loading="lazy"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad">
+    <div class="wrap">
+      <div class="eyebrow">04 · 2028 대입</div>
+      <h2 class="title oneline">한 가지 전형만으로는 부족합니다</h2>
+      <p class="lead oneline">2028학년도부터 내신 5등급제와 통합형 수능이 적용됩니다. 생기부, 면접, 성취도를 함께 준비해야 합니다.</p>
+      <div class="ptabs" role="tablist">
+        <button class="ptab" role="tab" aria-selected="true" data-p="g">생기부</button>
+        <button class="ptab" role="tab" aria-selected="false" data-p="i">면접</button>
+        <button class="ptab" role="tab" aria-selected="false" data-p="a">성취도</button>
+        <button class="ptab" role="tab" aria-selected="false" data-p="s">수능</button>
+      </div>
+
+      <div class="ppanel on" data-panel="g">
+        <h3>3년 탐구 설계부터 세특 분량까지 관리합니다</h3>
+        <ul class="checklist">
+          <li><b>3년 탐구 설계</b> 학년이 올라갈수록 탐구가 깊어지도록 짭니다.</li>
+          <li><b>교과별 세특 표준안</b> 9과목의 작성 틀과 예시를 미리 만듭니다.</li>
+          <li><b>학년 공유 시트</b> 교사들이 서로의 기록을 읽고 수정을 제안합니다.</li>
+          <li><b>세특 분량 관리</b> 2학년 평균은 약 1,455byte로, 한도 1,500byte에 가깝습니다.</li>
+        </ul>
+        <button class="go" data-go="rec-record">생기부 자세히 보기 →</button>
+      </div>
+
+      <div class="ppanel" data-panel="i">
+        <h3>면접은 미리, 내 생기부로 준비합니다</h3>
+        <ul class="checklist">
+          <li><b>생기부 정밀 분석</b> 면접에서 나올 질문을 문장에서 찾습니다.</li>
+          <li><b>개인별 면접 워크북</b> 약 50쪽, 핵심 질문과 꼬리질문으로 구성합니다.</li>
+          <li><b>웹 면접 카드</b> 소리 내어 답한 뒤 모범답안과 비교합니다.</li>
+          <li><b>영상 · 모의면접</b> 답변을 촬영하고 선생님과 실전처럼 연습합니다.</li>
+        </ul>
+        <button class="go" data-go="rec-interview">면접 자세히 보기 →</button>
+      </div>
+
+      <div class="ppanel" data-panel="a">
+        <h3>성취도는 절대평가입니다</h3>
+        <p class="lead" style="margin-top:0">다른 학생과 경쟁하지 않고, 기준을 채우면 받을 수 있습니다. 성취도가 왜 중요한지, 수행평가 비중과 어떻게 이어지는지는 질문 답변에서 자세히 다룹니다.</p>
+        <button class="go" data-go="answers">질문 답변에서 보기 →</button>
+      </div>
+
+      <div class="ppanel" data-panel="s">
+        <h3>수시 최저도, 정시도 결국 수능 실력입니다</h3>
+        <ul class="checklist">
+          <li><b>수업 · 자습</b> 야간 수업, 주말 자습, 방학 수업으로 공부 시간을 보장합니다.</li>
+          <li><b>모의고사 분석</b> 전 과목 선생님이 출제 경향과 예상 등급컷을 분석합니다.</li>
+          <li><b>성적 향상 장학금</b> 내신과 모의고사를 합산해 상승 폭이 큰 학생에게 줍니다.</li>
+        </ul>
+        <button class="go" data-go="csat">아래에서 자세히 보기 ↓</button>
+      </div>
+      <p class="note">출처: 전북특별자치도교육청 자료, 2027 입학설명회 자료. 세부 사항은 대학 모집요강으로 확인하세요.</p>
+    </div>
+  </section>
+
+  <section class="pad alt">
+    <div class="wrap">
+      <div class="split snap">
+        <div>
+          <div class="eyebrow">내신 5등급제</div>
+          <h2 class="title">1등급은<br>상위 10%입니다</h2>
+          <p class="lead">등급은 비율로 정해집니다. 한 학년 120명 기준으로 단순 계산하면 다음과 같습니다.</p>
+          <ul class="checklist">
+            <li><b>1등급</b> 12명</li>
+            <li><b>1~2등급</b> 41명</li>
+          </ul>
+          <p class="note">단순 비율 계산이며 동점자 처리는 반영하지 않았습니다.</p>
+        </div>
+        <img src="img/05.jpg" alt="공부하는 호남고 학생들">
+      </div>
+
+      <div class="snap" style="margin-top:88px">
+        <div class="eyebrow">정원 충원 현황</div>
+        <h2 class="title sm">2026학년도 신입생 충원 결과</h2>
+        <p class="lead">5등급제에서는 학생 수가 등급을 좌우합니다. 모집 정원 대비 실제 입학 인원은 다음과 같습니다.</p>
+        <table class="tiers">
+          <tr><th>학교</th><th>모집 정원</th><th>실제 인원</th><th>미달</th></tr>
+          <tr><td><b>호남고</b></td><td>120명</td><td class="amt">120명</td><td class="amt">0명</td></tr>
+          <tr><td>A고</td><td>80명</td><td>78명</td><td>-2명</td></tr>
+          <tr><td>B고</td><td>100명</td><td>97명</td><td>-3명</td></tr>
+          <tr><td>C고</td><td>120명</td><td>87명</td><td>-33명</td></tr>
+          <tr><td>D고</td><td>120명</td><td>115명</td><td>-5명</td></tr>
+          <tr><td>E고</td><td>120명</td><td>100명</td><td>-20명</td></tr>
+        </table>
+        <p class="note">출처: 학교알리미(2026.5.) 공시 기준, 입학설명회 자료</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad">
+    <div class="wrap">
+      <div class="eyebrow">수능 · 모의고사</div>
+      <h2 class="title oneline">수시 최저도, 정시도 결국 수능 실력입니다</h2>
+      <p class="lead">야간 수업으로 내신은 물론 모의고사까지 대비합니다. 학기 중, 주말, 방학까지 공부 시간을 보장합니다.</p>
+      <div class="nat-panel">
+        <h3 class="nat-h">수시에도 수능이 필요합니다: 수능 최저 = 입장권</h3>
+        <p class="lead" style="margin:0 0 28px">수시에서도 수능이 필요한 이유</p>
+        <div class="nat-flow">
+          <div class="nat-step warm"><span class="nat-badge">1단계</span><h4>수능 최저 충족</h4><p>입장권: 기준만 넘으면 통과</p><div class="nat-box alert">기준을 못 넘으면 내신·서류를 보기도 전에 탈락</div></div>
+          <div class="nat-arrow" aria-hidden="true"></div>
+          <div class="nat-step"><span class="nat-badge dark">2단계</span><h4>내신·서류로 선발</h4><p>합격자는 여기서 결정</p><div class="nat-box">최저를 넘은 지원자끼리 다시 경쟁</div></div>
+        </div>
+        <div class="nat-core"><span>예시</span>"국어 · 수학 · 영어 · 탐구 중 2개 합 5등급 이내" 같은 조건</div>
+      </div>
+
+      <div class="kpis two">
+        <div class="kpi"><span class="k-l">일반 학생 야간 자습 · 1일 최대</span><b>3시간</b></div>
+        <div class="kpi hl"><span class="k-l">기숙사(해강반) 학생 · 1일 최대</span><b>6시간</b></div>
+      </div>
+
+      <div class="cards" style="margin-top:28px">
+        <div class="card"><h3 class="card-title">16:45 – 18:00 · 방과후 수업</h3><p>국·수·영·사·과를 수준별로 고릅니다. 면접 대비 수업도 포함합니다.</p></div>
+        <div class="card"><h3 class="card-title">19:00 – 20:40 · 맞춤형 야간 수업</h3><p>교과 보충(기초), 도전학교(탐구 집중), 야간 클리닉(고난도 심화) 중에서 고릅니다.</p></div>
+        <div class="card"><h3 class="card-title">주말 자습</h3><p>1·2학년은 일요일, 3학년은 토·일·공휴일에 운영합니다. 참여자 전원에게 간식을 제공합니다.</p></div>
+        <div class="card"><h3 class="card-title">방학 09:10 – 12:00 · 골라 듣는 수업</h3><p>대학처럼 수강 신청을 합니다. 공강 시간에는 홈베이스에서 자율학습을 합니다.</p></div>
+      </div>
+
+      <div class="cards three" style="margin-top:16px">
+        <div class="card"><h3 class="card-title">순공 60 약점 보완 캠프</h3><p>학기별 60일 학습 습관 프로젝트입니다. 아침·점심 자습반도 함께 운영합니다.</p></div>
+        <div class="card"><h3 class="card-title">자체 주말 모의고사</h3><p>학년별 자체 모의고사와 앱으로 제공하는 기출 문제로 실전 감각을 유지합니다.</p></div>
+        <div class="card"><h3 class="card-title">성적 향상 장학금</h3><p>내신과 모의고사를 합산해 상승 폭이 큰 학생에게 상장과 장학금을 줍니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad alt">
+    <div class="wrap">
+      <div class="eyebrow">모의고사 분석</div>
+      <h2 class="title">모의고사가 끝나면,<br>전 과목 선생님이 분석합니다</h2>
+      <p class="lead">출제 경향, 오답률 높은 문항, 예상 등급컷, 그리고 호남고 학생들에게 필요한 학습 전략까지 담습니다.</p>
+
+      <div class="cards six" style="margin-top:28px">
+        <div class="card"><h3 class="card-title">3월</h3><p>1~3학년 26과목</p></div>
+        <div class="card"><h3 class="card-title">5월</h3><p>3학년</p></div>
+        <div class="card"><h3 class="card-title">6월</h3><p>1~3학년 26과목</p></div>
+        <div class="card"><h3 class="card-title">7월</h3><p>3학년</p></div>
+        <div class="card"><h3 class="card-title">9월</h3><p>1~3학년</p></div>
+        <div class="card"><h3 class="card-title">10월</h3><p>3학년 · 작성 중</p></div>
+      </div>
+
+      <div class="cards three" style="margin-top:16px">
+        <div class="card"><h3 class="card-title">3학년 · 물리</h3><p>대부분의 문항이 수능특강 기반입니다. 연계 교재 문제에 그치지 않고, 조건이 추가·변형된 복합 상황까지 대비해야 합니다.</p></div>
+        <div class="card"><h3 class="card-title">3학년 · 수학</h3><p>예상 1등급 구간은 확률과 통계 90~92점, 미적분 86~88점, 기하 87~89점입니다. 킬러 문항을 배제하고 개념의 정확한 이해와 계산 능력으로 변별합니다.</p></div>
+        <div class="card"><h3 class="card-title">3학년 · 생활과 윤리</h3><p>하나의 개념을 여러 방식으로 표현했을 때 알아차릴 수 있는지가 관건입니다. 개념을 확실히 숙지하고, 루소와 베카리아는 빈출이니 꼭 챙기세요.</p></div>
+        <div class="card"><h3 class="card-title">2학년 · 한국사</h3><p>고난도 문항과 교내 오답 분석을 함께 봅니다. 8번(국채보상운동)은 외환위기 극복과 성격이 비슷해 함정 선지로 자주 출제됩니다.</p></div>
+        <div class="card"><h3 class="card-title">1학년 · 공통수학</h3><p>1등급 컷은 77점대로 예측합니다. 3점 문항부터 복합 계산까지 나오므로, 기본 문항의 신속성을 먼저 확보합니다.</p></div>
+        <div class="card"><h3 class="card-title">1학년 · 공통영어</h3><p>순서 배열 문항에서 대명사를 놓쳐 오답률이 높습니다. 감이 아니라 명확한 근거를 찾아 푸는 연습이 필요합니다.</p></div>
+      </div>
+      <p class="note">출처: 호남고 2026학년도 모의고사 분석 시트 (6월 모의평가 분석 중 일부 발췌)</p>
+
+      <div style="margin-top:56px">
+        <div class="eyebrow">호남고 평가분석 시스템</div>
+        <h2 class="title sm">정기시험 결과 분석 보고서부터<br>진학 데이터까지 한곳에서</h2>
+        <p class="lead">정기시험 결과 분석 보고서, 전국연합학력평가 회차별 분석, 종합 교육통계, 진학 데이터 통계를 선생님들이 한곳에서 공유합니다.</p>
+        <img src="img/06.jpg" alt="호남고 평가분석 시스템 화면 - 정기시험 분석 보고서 아카이브" style="margin-top:28px;border-radius:16px;border:1px solid var(--line)">
+      </div>
+    </div>
+  </section>
+
+  <section class="pad">
+    <div class="wrap">
+      <div class="pager">
+        <span class="hint">다음은 생기부 · 면접 내용입니다</span>
+        <a class="next" href="#records">생기부 · 면접 보기 →</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 5. 생기부 · 면접 -->
+<div class="page" id="records">
+  <section class="pad" id="rec-record">
+    <div class="wrap">
+      <div class="eyebrow">05 · 학교생활기록부</div>
+      <h2 class="title oneline">선생님들이 함께 설계하고 검토합니다</h2>
+      <div class="steps">
+        <div><div class="n">01</div><h3>3년 탐구 설계</h3><p>학년이 올라갈수록 탐구가 깊어지도록 프로그램을 짭니다.</p></div>
+        <div><div class="n">02</div><h3>교과별 세특 표준안</h3><p>9과목의 작성 틀과 예시를 미리 만들어 둡니다.</p></div>
+        <div><div class="n">03</div><h3>학년 공유 시트</h3><p>교사들이 서로의 기록을 읽고 수정을 제안합니다.</p></div>
+        <div><div class="n">04</div><h3>세특 분량 관리</h3><p>2학년 세특 평균 분량은 약 1,455byte로, 한도 1,500byte에 가깝습니다.</p></div>
+      </div>
+      <div class="snap" style="margin-top:72px">
+        <div class="eyebrow">생기부의 재료가 되는 활동</div>
+        <h2 class="title sm">호남고만의 활동</h2>
+        <p class="lead">좋은 세특과 창체 기록은 좋은 활동에서 나옵니다. 교과·진로·독서·국제 교류까지, 학생이 직접 탐구하고 발표할 기회를 1년 내내 만듭니다.</p>
+        <div class="kpis" style="grid-template-columns:repeat(4,1fr)">
+          <div class="kpi hl"><span class="k-l">교내 특색 프로그램</span><b>46<small style="font-size:.5em">개</small></b></div>
+          <div class="kpi"><span class="k-l">2026 월별 인문학 아카데미</span><b>9<small style="font-size:.5em">회</small></b></div>
+          <div class="kpi"><span class="k-l">교내 동아리 (AI 6개 포함)</span><b>22<small style="font-size:.5em">개</small></b></div>
+          <div class="kpi"><span class="k-l">호주 국제협력 STEAM 참여</span><b>47<small style="font-size:.5em">명</small></b></div>
+        </div>
+
+        <h3 class="card-title" style="margin-top:56px;font-size:clamp(20px,1.8vw,28px)">호남고 1년 로드맵</h3>
+        <div class="cards five" style="margin-top:20px">
+          <div class="card"><h3 class="card-title">3~4월</h3><p>교육과정 설명회 · 벚꽃 구경 · EBS 학업 설계 · 고교-대학 연계 · 교육 상담 주간 · 현장 체험 학습 · 사제 동행 멘토링</p></div>
+          <div class="card"><h3 class="card-title">5~6월</h3><p>직업인과의 만남 · 개교기념식 · 국가 경제 운영 프로젝트 · 시민의 창 프로젝트 · 미래윤리탐구대회 · 꼬마 사회과학자 캠프 · 모의법정 · 한국사 큐레이팅</p></div>
+          <div class="card"><h3 class="card-title">7~8월</h3><p>주제 탐구 보고서 캠프 · 지리과 캠프 · 선배와의 만남 · STEAM 발표회 · 교과 심화 체험 · 사회과 학술제</p></div>
+          <div class="card"><h3 class="card-title">9~10월</h3><p>한글날 행사 · 교육 상담 주간 · 동아리 발표회 · 학술제 · 어울림 한마당 · 호남 축제 · 수학여행</p></div>
+          <div class="card"><h3 class="card-title">11~12월</h3><p>수능 · 교육과정 박람회 · 창체 발표회 · 사제 동행 멘토링</p></div>
+        </div>
+        <p class="note">출처: 2026 호남고 소식지 「호남고 로드맵」</p>
+      </div>
+      <div class="cmp snap" style="margin-top:72px">
+        <div class="eyebrow">비교해 보기 · 1학년 자율활동</div>
+        <h2 class="title sm">호남고등학교는 모든 학생을 섬세하게 관찰하고 기록합니다</h2>
+        <p class="lead">1학년 생활기록부 자율활동 기록 두 편입니다. 읽고 어느 쪽이 상위권인지 맞춰 보세요. 정답은 버튼으로 확인합니다.</p>
+        <div class="cmp-tools"><button type="button" class="cmp-shuffle">다시 섞기</button><button type="button" class="cmp-reveal">정답 보기</button><button type="button" class="cmp-analyze">분석 보기</button></div>
+        <div class="cmp-grid">
+          <div class="cmp-card" data-grade="상위권"><div class="cmp-head"><span class="cmp-tag"></span><span class="cmp-grade"></span></div><img src="img/07.jpg" alt="자율활동 기록 1" loading="lazy"></div>
+          <div class="cmp-card" data-grade="중하위권"><div class="cmp-head"><span class="cmp-tag"></span><span class="cmp-grade"></span></div><img src="img/08.jpg" alt="자율활동 기록 2" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="analysis" style="margin-top:56px">
+        <div class="eyebrow">분석 자료</div>
+        <h2 class="title sm">자율활동 기록 분석</h2>
+        <p class="lead">기록에서 역량이 드러나는 문장을 색으로 표시했습니다. 빨강은 학업역량, 파랑은 진로역량, 초록은 공동체역량입니다.</p>
+        <div class="cmp-grid" style="margin-top:32px">
+          <figure style="margin:0"><h3 class="card-title" style="margin-bottom:16px">분석 자료 ①</h3><img src="img/09.jpg" alt="자율활동 기록 분석 ①" loading="lazy" style="display:block;width:100%;height:480px;object-fit:contain;background:#fff;border-radius:12px;border:1px solid var(--line)"></figure>
+          <figure style="margin:0"><h3 class="card-title" style="margin-bottom:16px">분석 자료 ②</h3><img src="img/10.jpg" alt="자율활동 기록 분석 ②" loading="lazy" style="display:block;width:100%;height:480px;object-fit:contain;background:#fff;border-radius:12px;border:1px solid var(--line)"></figure>
+        </div>
+      </div>
+      <div class="cmp snap" style="margin-top:72px">
+        <div class="eyebrow">비교해 보기 · 한문 세부능력 및 특기사항</div>
+        <h2 class="title sm">호남고등학교는 모든 학생을 섬세하게 관찰하고 기록합니다</h2>
+        <p class="lead">한문 세부능력 및 특기사항 기록 두 편입니다. 문장의 구체성과 역량이 드러나는 정도를 보고 맞춰 보세요.</p>
+        <div class="cmp-tools"><button type="button" class="cmp-shuffle">다시 섞기</button><button type="button" class="cmp-reveal">정답 보기</button><button type="button" class="cmp-analyze">분석 보기</button></div>
+        <div class="cmp-grid">
+          <div class="cmp-card" data-grade="상위권"><div class="cmp-head"><span class="cmp-tag"></span><span class="cmp-grade"></span></div><img src="img/11.jpg" alt="한문 세특 기록 1" loading="lazy"></div>
+          <div class="cmp-card" data-grade="중위권"><div class="cmp-head"><span class="cmp-tag"></span><span class="cmp-grade"></span></div><img src="img/12.jpg" alt="한문 세특 기록 2" loading="lazy"></div>
+        </div>
+      </div>
+      <div class="analysis" style="margin-top:56px">
+        <div class="eyebrow">분석 자료</div>
+        <h2 class="title sm">한문 세부능력 및 특기사항 분석</h2>
+        <p class="lead">기록에서 역량이 드러나는 문장을 색으로 표시했습니다. 빨강은 학업역량, 파랑은 진로역량, 초록은 공동체역량입니다.</p>
+        <div class="cmp-grid" style="margin-top:32px">
+          <figure style="margin:0"><h3 class="card-title" style="margin-bottom:16px">분석 자료 ①</h3><img src="img/13.jpg" alt="한문 세특 분석 ①" loading="lazy" style="display:block;width:100%;height:480px;object-fit:contain;background:#fff;border-radius:12px;border:1px solid var(--line)"></figure>
+          <figure style="margin:0"><h3 class="card-title" style="margin-bottom:16px">분석 자료 ②</h3><img src="img/14.jpg" alt="한문 세특 분석 ②" loading="lazy" style="display:block;width:100%;height:480px;object-fit:contain;background:#fff;border-radius:12px;border:1px solid var(--line)"></figure>
+        </div>
+      </div>
+      <div class="topic-nav">
+        <div class="lbl">다른 주제도 살펴보세요</div>
+        <button class="tnav" data-go="rec-interview">면접</button><button class="tnav" data-go="answers">성취도</button><button class="tnav" data-go="csat">수능</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad alt" id="rec-interview">
+    <div class="wrap">
+      <div class="eyebrow">면접 준비</div>
+      <h2 class="title">면접은 미리, 내 생기부로 준비합니다</h2>
+      <p class="lead">2028 대입은 서울대·고려대·중앙대 등에서 면접이 늘어납니다. 호남고는 학생 한 명 한 명의 생기부를 분석해 개인별 면접 워크북과 웹 면접 카드를 만들고, 영상 촬영과 모의면접으로 반복 연습합니다.</p>
+      <div class="steps">
+        <div><div class="n">01</div><h3>생기부 정밀 분석</h3><p>면접에서 나올 질문과 확인받기 쉬운 기록을 찾습니다.</p></div>
+        <div><div class="n">02</div><h3>개인별 면접 워크북</h3><p>약 50쪽, 개념 사전과 핵심 질문, 꼬리질문으로 구성합니다.</p></div>
+        <div><div class="n">03</div><h3>웹 면접 카드</h3><p>소리 내어 답한 뒤 카드를 뒤집어 모범답안과 비교합니다.</p></div>
+        <div><div class="n">04</div><h3>영상 · 모의면접</h3><p>답변 영상을 찍어 제출하고 선생님과 실전처럼 연습합니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad">
+    <div class="wrap">
+      <div class="eyebrow">개인별 면접 워크북</div>
+      <h2 class="title">학생마다 다른 맞춤형 워크북</h2>
+      <p class="lead">같은 학교, 같은 학년이라도 생기부가 다르기 때문에 질문과 답변 뼈대가 모두 다릅니다. 워크북은 다섯 부분으로 구성합니다.</p>
+      <div class="cards three">
+        <div class="card"><h3 class="card-title">01 · 생기부 개념 사전</h3><p>세특에 쓴 개념을 정확히 설명할 수 있도록 정리합니다.</p></div>
+        <div class="card"><h3 class="card-title">02 · 공통 핵심 질문</h3><p>활동별 질문, 키워드 흐름, 모범답안 뼈대, 꼬리질문을 담습니다.</p></div>
+        <div class="card"><h3 class="card-title">03 · 도서 질문</h3><p>읽은 계기, 핵심, 내 탐구에 쓴 부분, 책의 한계, 진로 확장을 다룹니다.</p></div>
+        <div class="card"><h3 class="card-title">04 · AI 의심 검증 대비</h3><p>“직접 했는가”를 묻는 질문에 자연스럽게 답하는 연습입니다.</p></div>
+        <div class="card"><h3 class="card-title">05 · 대학별 맞춤 질문</h3><p>지원 대학의 면접 방식, 비중, 평가 요소별로 대비합니다.</p></div>
+      </div>
+      <p class="note" style="margin-top:28px;font-size:16px;color:#5b6472">재학생의 생활기록부가 담긴 자료라 워크북 실물은 공개하지 않습니다. 실물은 입학 상담 때 선생님과 함께 보실 수 있습니다.</p>
+    </div>
+  </section>
+
+  <section class="pad alt">
+    <div class="wrap">
+      <div class="eyebrow">네 문장으로 답하기</div>
+      <h2 class="title">동기 → 수행 → 근거 → 결과 · 배운 점</h2>
+      <p class="lead">모범답안은 외우는 글이 아니라 생기부로 만든 뼈대입니다. 학생이 실제로 한 일로 칸을 채우지 않으면 외운 답은 꼬리질문에서 무너집니다.</p>
+    </div>
+  </section>
+
+  <section class="pad">
+    <div class="wrap">
+      <div class="eyebrow">웹 면접 카드</div>
+      <h2 class="title">질문을 보고 먼저 소리 내어 답합니다</h2>
+      <p class="lead">카드를 뒤집어 키워드 흐름과 모범답안을 비교합니다. ‘알아요 / 다시 볼래요’로 분류해 약한 질문만 반복하고, 모의면접 모드로 무작위 질문을 받을 수 있습니다.</p>
+      <div class="cards">
+        <div class="card"><h3 class="card-title">① 질문 면</h3><p>생기부 문장에서 나온 질문을 보고 먼저 답해 봅니다.</p></div>
+        <div class="card"><h3 class="card-title">② 답변 면</h3><p>키워드 흐름, 핵심 개념, 내 답변, 모범답안을 확인합니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad alt">
+    <div class="wrap">
+      <div class="eyebrow">찍고 · 보고 · 고치기</div>
+      <h2 class="title">영상으로 말투와 시선을 함께 고칩니다</h2>
+      <div class="steps">
+        <div><div class="n">01</div><h3>기초 질문지 촬영</h3><p>선생님이 정한 기한까지 답변 영상을 찍어 제출합니다.</p></div>
+        <div><div class="n">02</div><h3>전자칠판 앞 반복 촬영</h3><p>교실에서 실전과 같은 자세로 반복해서 찍습니다.</p></div>
+        <div><div class="n">03</div><h3>함께 보며 피드백</h3><p>말투, 시선, 네 문장 답변 구조를 선생님과 함께 점검합니다.</p></div>
+      </div>
+      <p class="note" style="margin-top:28px;font-size:16px;color:#5b6472">방과후 면접 대비 수업은 졸업생 1:1 멘토링과 연계합니다.</p>
+    </div>
+  </section>
+
+  <section class="pad">
+    <div class="wrap">
+      <div class="eyebrow">면접을 위한 교내 프로그램</div>
+      <h2 class="title">말하고, 토론하고, 실전처럼 연습합니다</h2>
+      <p class="lead">워크북 하나로 끝나지 않습니다. 3년 동안 말할 기회를 꾸준히 만듭니다.</p>
+      <div class="cards">
+        <div class="card"><h3 class="card-title">사제동행 독서 · 이슈 토론</h3><p>선생님과 책과 시사 이슈를 두고 토론하며 근거를 들어 말하는 힘을 기릅니다.</p></div>
+        <div class="card"><h3 class="card-title">3분 스피치</h3><p>정해진 시간 안에 생각을 구조화해 말하는 연습입니다. 면접 답변의 기본기입니다.</p></div>
+        <div class="card"><h3 class="card-title">모의 면접 대회</h3><p>실전과 같은 형식으로 면접을 치르고 피드백을 받습니다.</p></div>
+        <div class="card"><h3 class="card-title">외국어 스피치 대회</h3><p>영어, 일본어, 중국어 스피치로 발표 경험을 넓힙니다.</p></div>
+      </div>
+      <p class="note" style="margin-top:28px;font-size:16px;color:#5b6472">면접 대비 방과후 수업은 2학년 방학 중, 3학년은 일과 중에 운영합니다.</p>
+    </div>
+  </section>
+
+  <section class="pad alt">
+    <div class="wrap">
+      <div class="eyebrow">“AI로 쓴 거 아니에요?”</div>
+      <h2 class="title">이 질문에 대비하는 다섯 가지 원칙</h2>
+      <div class="steps">
+        <div><div class="n">01</div><h3>범위부터 정직하게</h3><p>숨기면 꼬리질문에서 반드시 드러납니다.</p></div>
+        <div><div class="n">02</div><h3>과정 · 실패 · 숫자로 증명</h3><p>막힌 지점과 원자료는 직접 겪은 사람만 말할 수 있습니다.</p></div>
+        <div><div class="n">03</div><h3>용어는 한 단계 낮추기</h3><p>이름보다 핵심 관계 하나를 내 말로 설명합니다.</p></div>
+        <div><div class="n">04</div><h3>범위를 스스로 한정</h3><p>“제가 직접 한 것은 여기까지입니다.”라고 말합니다.</p></div>
+        <div><div class="n">05</div><h3>조건 변형에 대비</h3><p>외운 답은 “만약 ~라면?”이라는 질문에서 멈춥니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad">
+    <div class="wrap">
+      <div class="eyebrow">대학별 면접 한눈에</div>
+      <h2 class="title">대학마다 다른 면접, 미리 확인합니다</h2>
+      <p class="lead">아래는 워크북에 수록한 예시입니다. 전형과 비중은 해마다 바뀔 수 있으니 모집요강으로 꼭 확인하세요.</p>
+      <div class="table-wrap">
+        <table class="mini">
+          <thead><tr><th>대학 · 전형</th><th>면접 방식</th></tr></thead>
+          <tbody>
+            <tr><td>서울대 지역균형</td><td>서류 + 면접(30%), 학생부 기반 개별 면접 10분 내외</td></tr>
+            <tr><td>서울대 일반전형</td><td>1단계 + 면접 및 구술고사(40%), 제시문 준비 약 30분 · 면접 15분 내외</td></tr>
+            <tr><td>중앙대 탐구형인재</td><td>1단계 70 + 면접 30, 학업 준비도 · 계열 탐구 역량 · 교내 활동 이해</td></tr>
+            <tr><td>경희대 네오르네상스</td><td>1단계 70 + 면접 30, 인성 50 · 전공 적합성 50, 10분 내외</td></tr>
+            <tr><td>서울시립대 면접형</td><td>서류 50 + 면접 50, 개념 즉답형</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="topic-nav">
+        <div class="lbl">다른 주제도 살펴보세요</div>
+        <button class="tnav" data-go="rec-record">생기부</button><button class="tnav" data-go="answers">성취도</button><button class="tnav" data-go="csat">수능</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+  <section class="pad">
+    <div class="wrap">
+      <div class="pager">
+        <span class="hint">다음은 학습 · 기숙사 내용입니다</span>
+        <a class="next" href="#dorm">학습 · 기숙사 보기 →</a>
+      </div>
+    </div>
+  </section>
+
+<!-- 6. 학습 · 기숙사 -->
+<div class="page" id="dorm">
+  <section class="pad">
+    <div class="wrap">
+      <div class="eyebrow">06 · 고교 내신은 입학한 뒤에 만들어집니다</div>
+      <h2 class="title">공부할 시간과 공간을<br>학교가 보장합니다</h2>
+      <div class="stats">
+        <div class="stat"><div class="num">3<small>시간</small></div><div class="cap">일반 학생 야간 자습 (1일 최대)</div></div>
+        <div class="stat"><div class="num">6<small>시간</small></div><div class="cap">기숙사 학생 자습 (1일 최대)</div></div>
+        <div class="stat"><div class="num">60<small>일</small></div><div class="cap">학기마다 운영하는 학습 습관 프로젝트 「순공 60」</div></div>
+      </div>
+      <div class="cards three" style="margin-top:20px">
+        <div class="card"><h3 class="card-title">공부할 자리가 있는 학교</h3><p>홈베이스, 도서관, 교과 전용교실을 갖췄습니다. 방학 공강 시간에는 홈베이스에서 자율학습을 합니다.</p></div>
+        <div class="card"><h3 class="card-title">공부 시간을 보장하는 학교</h3><p>평일 야간 자습, 아침·점심 자습반, 주말 자습을 운영합니다. 휴대전화와 전자기기는 따로 관리합니다.</p></div>
+        <div class="card"><h3 class="card-title">수준에 맞게 고르는 수업</h3><p>방과후 수업은 국·수·영·사·과를 수준별로 고릅니다. 야간 수업은 교과 보충, 도전학교, 야간 클리닉으로 나뉩니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad alt">
+    <div class="wrap">
+      <div class="split snap">
+        <img src="img/15.jpg" alt="호남고 기숙사와 운동장">
+        <div>
+          <div class="eyebrow">기숙사 해강반</div>
+          <h2 class="title">선생님이 함께 상주하는<br>기숙사</h2>
+          <ul class="checklist">
+            <li><b>남학생</b> 22명 선발 (2027학년도)</li>
+            <li><b>여학생</b> 12명 선발 (2027학년도)</li>
+            <li><b>선발 기준</b> 중학교 내신 300점 + 해강 선발고사 150점 = 450점</li>
+            <li><b>해강 선발고사</b> 2026년 12월 26일(토) 09:00</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top:88px">
+        <div class="eyebrow">기숙사 일과 · 선발</div>
+        <h2 class="title sm">하루 일과와 선발 점수</h2>
+        <div class="split" style="align-items:start">
+          <table class="tiers" style="margin-top:0">
+            <tr><th>평일 일과</th><th>시간</th></tr>
+            <tr><td>아침 점호</td><td>07:10</td></tr>
+            <tr><td>조식</td><td>07:45</td></tr>
+            <tr><td>학교 생활</td><td>08:20–18:00</td></tr>
+            <tr><td>석식 · 휴식</td><td>18:00–19:00</td></tr>
+            <tr><td>자습 1</td><td>19:00–20:20</td></tr>
+            <tr><td>자습 2</td><td>20:40–22:00</td></tr>
+            <tr><td>자습 3</td><td>22:20–23:30</td></tr>
+            <tr><td>취침</td><td>24:00</td></tr>
+            <tr><td>심야 자습 (희망)</td><td>00:10–02:00</td></tr>
+          </table>
+          <div>
+            <table class="tiers" style="margin-top:0">
+              <tr><th>2027학년도 선발 점수</th><th>점수</th></tr>
+              <tr><td>중학교 내신</td><td>300점</td></tr>
+              <tr><td>국어</td><td>40점</td></tr>
+              <tr><td>수학</td><td>55점</td></tr>
+              <tr><td>영어</td><td>55점</td></tr>
+              <tr><td><b>합계</b></td><td class="amt">450점</td></tr>
+            </table>
+            <ul class="checklist">
+              <li><b>생활 관리</b> 휴대전화·전자기기 별도 관리, 사교육은 금·토·일 허용</li>
+              <li><b>멘토링</b> SKY·KAIST 선배 1:1 멘토링, 기숙사 동아리·체육대회</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="pager">
+        <span class="hint">다음은 장학 · 입학 일정입니다</span>
+        <a class="next" href="#schedule">장학 · 일정 보기 →</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 7. 장학 · 일정 · 문의 -->
+<div class="page" id="schedule">
+  <section class="pad">
+    <div class="wrap">
+      <div class="eyebrow">07 · 장학 · 복지</div>
+      <h2 class="title">장학금은 해강 선발고사<br>성적과 연결됩니다</h2>
+      <table class="tiers">
+        <tr><th>해강 선발고사 순위 (학기당)</th><th>장학 특전</th></tr>
+        <tr><td>1위</td><td class="amt">300만 원</td></tr>
+        <tr><td>2~3위</td><td class="amt">200만 원</td></tr>
+        <tr><td>4~8위</td><td class="amt">100만 원</td></tr>
+        <tr><td>9~12위</td><td class="amt">50만 원</td></tr>
+      </table>
+      <p style="margin-top:24px;font-size:17px">호남동문장학회는 63년 연속 이어지고 있습니다. 체험학습비 전액 지원 등 학생 복지도 함께 운영합니다.</p>
+      <p class="note">출처: 2027 입학설명회 자료</p>
+    </div>
+  </section>
+
+  <section class="pad alt">
+    <div class="wrap">
+      <div class="eyebrow">2027학년도 입학 일정</div>
+      <h2 class="title">모집 120명,<br>중학교 내신 100%로 선발합니다</h2>
+      <div class="timeline">
+        <div><div class="d">12.21 ~ 12.23</div><h3>원서 접수</h3><p>23일(수) 17:00까지</p></div>
+        <div><div class="d">12.26 (토)</div><h3>해강 선발고사</h3><p>09:00, 08:50 입실</p></div>
+        <div><div class="d">12.31 (목)</div><h3>합격자 발표</h3><p>10:00, 전북고입전형포털 · 학교 홈페이지</p></div>
+        <div><div class="d">1.18 ~ 1.20</div><h3>등록</h3><p>20일(수) 17:00까지</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pad">
+    <div class="wrap">
+      <div class="contact">
+        <div class="big">질문은 언제든지 환영합니다</div>
+        <div class="row">
+          <div><b>교무실 (입학 · 해강반)</b><br>063-570-7815</div>
+          <div><b>행정실</b><br>063-570-7884</div>
+          <div><b>주소</b><br>전북특별자치도 정읍시 정읍남로 1364-13</div>
+        </div>
+      </div>
+      <div class="pager">
+        <span class="hint">처음 화면으로 돌아갑니다</span>
+        <a class="next" href="#intro">처음으로 →</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  var PAGES = ['intro','questions','answers','admission','records','dorm','schedule'];
+  function showPage(forced) {
+    var id = forced || location.hash.slice(1);
+    if (PAGES.indexOf(id) < 0) id = 'intro';
+    document.querySelectorAll('.page').forEach(function (p) { p.classList.toggle('on', p.id === id); });
+    document.querySelectorAll('nav.tabs a').forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + id); });
+    window.scrollTo(0, 0);
+  }
+  function calcGrade() {
+    var el = document.getElementById('stu');
+    if (!el) return;
+    var n = parseInt(el.value, 10);
+    var r1 = Math.round(n * 0.10);
+    var r12 = Math.round(n * 0.34);
+    document.getElementById('nv').textContent = n;
+    document.getElementById('r1').textContent = r1 + '명';
+    document.getElementById('r2').textContent = (r12 - r1) + '명';
+    document.getElementById('r12').textContent = r12 + '명';
+  }
+  document.getElementById('stu') && document.getElementById('stu').addEventListener('input', calcGrade);
+  calcGrade();
+  window.addEventListener('hashchange', function(){ showPage(); });
+  function navigate(id) {
+    try { history.replaceState(null, '', '#' + id); } catch (e) {}
+    showPage(id);
+    window.scrollTo(0, 0);
+  }
+  // Every in-page link (tabs, "다음 페이지" buttons) goes through navigate(), so it works even where hash changes are blocked.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    if (PAGES.indexOf(id) < 0) return;
+    e.preventDefault();
+    navigate(id);
+  });
+  // Always open on the first screen: drop any leftover #hash from a previous visit.
+  if (location.hash) { history.replaceState(null, '', location.pathname + location.search); }
+  window.scrollTo(0, 0);
+  showPage();
+</script>
+
+<script>
+(function(){
+  var tabs=document.querySelectorAll('.ptab');
+  var panels=document.querySelectorAll('.ppanel');
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){
+      var k=t.getAttribute('data-p');
+      tabs.forEach(function(x){ x.setAttribute('aria-selected', x===t ? 'true':'false'); });
+      panels.forEach(function(p){ p.classList.toggle('on', p.getAttribute('data-panel')===k); });
+    });
+  });
+  document.querySelectorAll('.ppanel .go, .tnav').forEach(function(b){
+    b.addEventListener('click',function(){
+      var d=b.getAttribute('data-go');
+      if(d==='csat'){
+        var goCsat=function(){
+          var el=Array.prototype.find.call(document.querySelectorAll('#admission .eyebrow'),function(e){return e.textContent.indexOf('수능 · 모의고사')===0;});
+          if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        };
+        navigate('admission'); setTimeout(goCsat,80);
+      } else if(d.indexOf('rec-')===0){
+        var t=document.getElementById(d);
+        var go=function(){ if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); };
+        navigate('records'); setTimeout(go,80);
+      } else {
+        navigate(d);
+      }
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  var btn=document.getElementById('fsBtn');
+  function isFs(){ return !!(document.fullscreenElement||document.webkitFullscreenElement); }
+  btn.addEventListener('click',function(){
+    if(!isFs()){
+      var el=document.documentElement;
+      var req=el.requestFullscreen||el.webkitRequestFullscreen;
+      if(!req){ btn.textContent='이 브라우저는 미지원'; return; }
+      var r=req.call(el);
+      if(r && r.catch) r.catch(function(){ btn.textContent='여기선 전체화면 불가 · 새 창에서 열기'; });
+    } else {
+      var ex=document.exitFullscreen||document.webkitExitFullscreen;
+      if(ex) ex.call(document);
+    }
+  });
+  document.addEventListener('fullscreenchange',function(){ btn.textContent=isFs()?'전체화면 종료':'전체화면'; });
+  document.addEventListener('webkitfullscreenchange',function(){ btn.textContent=isFs()?'전체화면 종료':'전체화면'; });
+})();
+</script>
+<div class="cmp-lb" id="cmpLb"><img alt=""></div>
+<script>
+(function(){
+  var lb=document.getElementById('cmpLb');
+  var lbImg=lb.querySelector('img');
+  function fit(){
+    var ratio=lbImg.naturalWidth/lbImg.naturalHeight || 1;
+    var w=Math.min(window.innerWidth*0.96, window.innerHeight*0.92*ratio);
+    lbImg.style.width=Math.round(w)+'px';
+  }
+  document.addEventListener('click',function(e){
+    var t=e.target;
+    if(t.tagName==='IMG' && t.closest('.cmp-card')){
+      lbImg.src=t.src; lb.classList.add('on');
+      if(lbImg.complete) fit(); else lbImg.onload=fit;
+    } else if(lb.classList.contains('on')){
+      lb.classList.remove('on');
+    }
+  });
+  window.addEventListener('resize',function(){ if(lb.classList.contains('on')) fit(); });
+  function setup(root){
+    var grid=root.querySelector('.cmp-grid');
+    var shuffleBtn=root.querySelector('.cmp-shuffle');
+    var revealBtn=root.querySelector('.cmp-reveal');
+    function shuffle(){
+      var cards=Array.prototype.slice.call(grid.children);
+      for(var i=cards.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=cards[i]; cards[i]=cards[j]; cards[j]=t; }
+      cards.forEach(function(c,idx){
+        grid.appendChild(c);
+        c.querySelector('.cmp-tag').textContent='학생 '+String.fromCharCode(65+idx);
+        var g=c.querySelector('.cmp-grade'); g.textContent='?'; g.classList.remove('show');
+      });
+      revealBtn.disabled=false; revealBtn.textContent='정답 보기';
+    }
+    shuffleBtn.addEventListener('click', shuffle);
+    revealBtn.addEventListener('click', function(){
+      grid.querySelectorAll('.cmp-card').forEach(function(c){
+        var g=c.querySelector('.cmp-grade'); g.textContent=c.getAttribute('data-grade'); g.classList.add('show');
+      });
+      revealBtn.disabled=true; revealBtn.textContent='정답 공개됨';
+    });
+    shuffle();
+  }
+  document.querySelectorAll('.cmp').forEach(setup);
+})();
+</script>
+<div class="amodal" id="amodal"><div class="amodal-box"><button type="button" class="amodal-x">닫기 ✕</button><div class="amodal-body"></div></div></div>
+<script>
+(function(){
+  var modal=document.getElementById('amodal');
+  var body=modal.querySelector('.amodal-body');
+  function close(){ modal.classList.remove('on'); body.innerHTML=''; }
+  document.querySelectorAll('.cmp-analyze').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var cmp=btn.closest('.cmp');
+      var an=cmp && cmp.nextElementSibling;
+      if(!an || !an.classList.contains('analysis')) return;
+      body.innerHTML='';
+      var copy=an.cloneNode(true); copy.classList.remove('analysis'); copy.style.marginTop='0';
+      body.appendChild(copy);
+      modal.classList.add('on');
+      body.scrollTop=0;
+      modal.querySelector('.amodal-box').scrollTop=0;
+    });
+  });
+  modal.querySelector('.amodal-x').addEventListener('click', close);
+  modal.addEventListener('click', function(e){ if(e.target===modal) close(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+})();
+</script>
+</body>
+</html>
